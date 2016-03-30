@@ -8,19 +8,51 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final int GRANULARITY = 64;
+    private ImageView image;
+    private SeekBar seekbar;
+    private SeekBar.OnSeekBarChangeListener onSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            Bitmap legoFiedBitmap = createLegoFiedBitmap(progress + 1);
+            image.setImageBitmap(legoFiedBitmap);
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+            //NOP
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            //NOP
+        }
+    };
+    ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ImageView image = (ImageView) findViewById(R.id.imageview_main);
+        image = (ImageView) findViewById(R.id.imageview_main);
+        seekbar = (SeekBar) findViewById(R.id.seekbar_bricksize);
+        seekbar.setProgress(GRANULARITY);
+        seekbar.setOnSeekBarChangeListener(onSeekBarChangeListener);
 
-        int granularity = 64;
+        Bitmap legofied = createLegoFiedBitmap(GRANULARITY);
+        image.setImageBitmap(legofied);
+    }
+
+    @NonNull
+    private Bitmap createLegoFiedBitmap(int granularity) {
         boolean fastmode = true;
 
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.profile_picture);
@@ -38,16 +70,14 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < scaledBitmap.getWidth(); i++) {
             for (int j = 0; j < scaledBitmap.getHeight(); j++) {
                 if (fastmode) {
-                    paint.setColorFilter(new PorterDuffColorFilter(getColor(bitmap, i, j, granularity), PorterDuff.Mode.OVERLAY));
-                } else {
                     paint.setColorFilter(new PorterDuffColorFilter(scaledBitmap.getPixel(i, j), PorterDuff.Mode.OVERLAY));
+                } else {
+                    paint.setColorFilter(new PorterDuffColorFilter(getColor(bitmap, i, j, granularity), PorterDuff.Mode.OVERLAY));
                 }
                 canvas.drawBitmap(scaledBrick, i * granularity, j * granularity, paint);
             }
         }
-
-
-        image.setImageBitmap(legofied);
+        return legofied;
     }
 
     public int getColor(Bitmap source, int x, int y, int granularity) {
