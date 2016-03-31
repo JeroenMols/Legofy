@@ -10,6 +10,8 @@ import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 
@@ -21,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar.OnSeekBarChangeListener onSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            Bitmap legoFiedBitmap = createLegoFiedBitmap(progress + 1);
+            Bitmap legoFiedBitmap = createLegoFiedBitmap(progress, true);
             image.setImageBitmap(legoFiedBitmap);
         }
 
@@ -43,17 +45,27 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         image = (ImageView) findViewById(R.id.imageview_main);
-        seekbar = (SeekBar) findViewById(R.id.seekbar_bricksize);
+        seekbar = (SeekBar) findViewById(R.id.seekbar_main_bricksize);
         seekbar.setProgress(GRANULARITY);
         seekbar.setOnSeekBarChangeListener(onSeekBarChangeListener);
+        Button button = (Button) findViewById(R.id.button_main_highres);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bitmap legoFiedBitmap = createLegoFiedBitmap(seekbar.getProgress(), false);
+                image.setImageBitmap(legoFiedBitmap);
+            }
+        });
 
-        Bitmap legofied = createLegoFiedBitmap(GRANULARITY);
+        Bitmap legofied = createLegoFiedBitmap(seekbar.getProgress(), true);
         image.setImageBitmap(legofied);
     }
 
     @NonNull
-    private Bitmap createLegoFiedBitmap(int granularity) {
-        boolean fastmode = true;
+    private Bitmap createLegoFiedBitmap(int granularity, boolean fastmode) {
+        if (granularity <= 0) {
+            granularity = 1;
+        }
 
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.profile_picture);
         Bitmap brick = BitmapFactory.decodeResource(getResources(), R.drawable.brick);
