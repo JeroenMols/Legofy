@@ -24,3 +24,8 @@ Refactor this experiment into two easy to use libraries
 
 ## Questions
 @molsjeroen
+
+## Credits
+- [Mona Lisa](http://www.wikiart.org/en/leonardo-da-vinci/mona-lisa?utm_source=returned&utm_medium=referral&utm_campaign=referral) - Leonard Da Vinchi
+- [Son of a man](http://www.wikiart.org/en/rene-magritte/son-of-man-1964) - Rene Magritte
+- [Android Developers logo](http://android-developers.blogspot.nl/) - Google
