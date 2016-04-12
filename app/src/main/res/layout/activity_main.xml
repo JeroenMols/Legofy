@@ -8,7 +8,8 @@
     <ImageView
         android:id="@+id/imageview_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_above="@+id/linearlayout_images" />
 
     <Button
         android:id="@+id/button_main_highres"
@@ -16,7 +17,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:text="High res" />
+        android:text="High res"
+        android:visibility="gone" />
 
     <SeekBar
         android:id="@+id/seekbar_main_bricksize"
@@ -24,6 +26,47 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignTop="@id/button_main_highres"
-        android:layout_toLeftOf="@id/button_main_highres" />
+        android:layout_toLeftOf="@id/button_main_highres"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/linearlayout_images"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageview_profile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:src="@drawable/profile_picture" />
+
+        <ImageView
+            android:id="@+id/imageview_monalise"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:src="@drawable/mona_lisa" />
+
+        <ImageView
+            android:id="@+id/imageview_magritte"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:src="@drawable/magritte" />
+
+        <ImageView
+            android:id="@+id/imageview_android"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:src="@drawable/android" />
+    </LinearLayout>
 
 </RelativeLayout>

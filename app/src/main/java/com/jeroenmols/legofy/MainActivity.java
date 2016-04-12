@@ -3,6 +3,8 @@ package com.jeroenmols.legofy;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -56,8 +58,27 @@ public class MainActivity extends AppCompatActivity {
         });
 
 //        image.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.profile_picture));
-        EffectDrawable customDrawable = new EffectDrawable(BitmapFactory.decodeResource(getResources(), R.drawable.profile_picture));
-        image.setImageDrawable(customDrawable);
+
+        addImageClickListener(R.id.imageview_profile, R.drawable.profile_picture);
+        addImageClickListener(R.id.imageview_monalise, R.drawable.mona_lisa);
+        addImageClickListener(R.id.imageview_magritte, R.drawable.magritte);
+        addImageClickListener(R.id.imageview_android, R.drawable.android);
+
+        setImageResource(R.drawable.profile_picture);
+    }
+
+    private void addImageClickListener(@IdRes int viewId, @DrawableRes final int drawable) {
+        findViewById(viewId).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setImageResource(drawable);
+            }
+        });
+    }
+
+    private void setImageResource(@DrawableRes int image) {
+        EffectDrawable customDrawable = new EffectDrawable(BitmapFactory.decodeResource(getResources(), image));
+        this.image.setImageDrawable(customDrawable);
         customDrawable.applyEffect(new LegofyEffect(getResources(), 64, 300));
     }
 }
