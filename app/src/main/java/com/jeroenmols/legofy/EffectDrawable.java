@@ -12,11 +12,19 @@ import android.support.annotation.NonNull;
 /**
  * @author Jeroen Mols on 11/04/16.
  */
-public class EffectDrawable extends Drawable implements Drawable.Callback, Runnable {
+public class EffectDrawable extends Drawable implements Drawable.Callback {
 
     private Paint paint;
     private Bitmap originalBitmap;
     private Effect effect;
+
+    private Runnable animationRunnable = new Runnable() {
+        @Override
+        public void run() {
+            invalidateSelf();
+            scheduleNextAnimationFrame();
+        }
+    };
 
     public EffectDrawable(Bitmap bitmap) {
         originalBitmap = bitmap;
@@ -29,20 +37,12 @@ public class EffectDrawable extends Drawable implements Drawable.Callback, Runna
     public void applyEffect(Effect effect) {
         this.effect = effect;
         effect.initialize(originalBitmap);
-        run();
+        scheduleNextAnimationFrame();
     }
 
-    public void invalidateDrawable(Drawable drawable) {
-        super.invalidateSelf(); //This was done for my specific example. I wouldn't use it otherwise
-    }
-
-
-    public void scheduleDrawable(Drawable drawable, Runnable runnable, long l) {
-        invalidateDrawable(drawable);
-    }
-
-    public void unscheduleDrawable(Drawable drawable, Runnable runnable) {
-        super.unscheduleSelf(runnable);
+    private void scheduleNextAnimationFrame() {
+        unscheduleSelf(animationRunnable);
+        scheduleSelf(animationRunnable, SystemClock.uptimeMillis() + effect.getFrameDuration());
     }
 
     @Override
@@ -93,16 +93,6 @@ public class EffectDrawable extends Drawable implements Drawable.Callback, Runna
         return new Rect(translationX, 0, scaledWidth + translationX, scaledHeight);
     }
 
-    public void nextFrame() {
-        unscheduleSelf(this);
-        scheduleSelf(this, SystemClock.uptimeMillis() + effect.getFrameDuration());
-    }
-
-    public void run() {
-        invalidateSelf();
-        nextFrame();
-    }
-
     @Override
     public void setAlpha(int alpha) {
         // Has no effect
@@ -119,4 +109,18 @@ public class EffectDrawable extends Drawable implements Drawable.Callback, Runna
         return 0;
     }
 
+    @Override
+    public void invalidateDrawable(Drawable who) {
+        super.invalidateSelf();
+    }
+
+    @Override
+    public void scheduleDrawable(Drawable who, Runnable what, long when) {
+        invalidateDrawable(who);
+    }
+
+    @Override
+    public void unscheduleDrawable(Drawable who, Runnable what) {
+        super.unscheduleSelf(what);
+    }
 }
