@@ -1,4 +1,4 @@
-package com.jeroenmols.legofy;
+package com.jeroenmols.brickeffect;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

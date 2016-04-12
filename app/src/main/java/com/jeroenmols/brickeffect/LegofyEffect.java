@@ -1,4 +1,4 @@
-package com.jeroenmols.legofy;
+package com.jeroenmols.brickeffect;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -45,7 +45,7 @@ public class LegofyEffect implements Effect {
         int imageHeight = bitmap.getHeight() / granularity;
 
         baseBitmap = Bitmap.createScaledBitmap(bitmap, imageWidth, imageHeight, true);
-        legofiedBitmap = Bitmap.createBitmap(imageWidth * granularity, imageHeight * granularity, Bitmap.Config.ARGB_8888);
+        legofiedBitmap = Bitmap.createBitmap(imageWidth * granularity, imageHeight * granularity, Bitmap.Config.ARGB_4444);
         amountOfBricks = imageWidth * imageHeight;
 
         canvas = new Canvas(legofiedBitmap);
