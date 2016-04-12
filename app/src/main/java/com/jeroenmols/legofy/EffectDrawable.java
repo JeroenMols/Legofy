@@ -16,6 +16,7 @@ public class EffectDrawable extends Drawable implements Drawable.Callback, Runna
 
     private Paint paint;
     private Bitmap originalBitmap;
+    private Effect effect;
 
     public EffectDrawable(Bitmap bitmap) {
         originalBitmap = bitmap;
@@ -23,6 +24,12 @@ public class EffectDrawable extends Drawable implements Drawable.Callback, Runna
         paint = new Paint();
         paint.setAntiAlias(true);
         this.setCallback(this);
+    }
+
+    public void applyEffect(Effect effect) {
+        this.effect = effect;
+        effect.initialize(originalBitmap);
+        run();
     }
 
     public void invalidateDrawable(Drawable drawable) {
@@ -44,6 +51,12 @@ public class EffectDrawable extends Drawable implements Drawable.Callback, Runna
         Rect destRect = createDestinationRectangle(canvas, originalBitmap);
 
         canvas.drawBitmap(originalBitmap, srcRect, destRect, paint);
+
+        if (effect != null) {
+            Bitmap bitmap = effect.nextFrame();
+            srcRect = new Rect(0, 0, bitmap.getHeight(), bitmap.getWidth());
+            canvas.drawBitmap(bitmap, srcRect, destRect, paint);
+        }
     }
 
     @NonNull
@@ -82,7 +95,7 @@ public class EffectDrawable extends Drawable implements Drawable.Callback, Runna
 
     public void nextFrame() {
         unscheduleSelf(this);
-        scheduleSelf(this, SystemClock.uptimeMillis() + 250);
+        scheduleSelf(this, SystemClock.uptimeMillis() + effect.getFrameDuration());
     }
 
     public void run() {
@@ -105,4 +118,5 @@ public class EffectDrawable extends Drawable implements Drawable.Callback, Runna
         // Not Implemented
         return 0;
     }
+
 }
