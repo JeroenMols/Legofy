@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int GRANULARITY = 64;
     public static final int ANIM_DURATION_MS = 300;
+
     private ImageView image;
 
     @Override
@@ -20,16 +21,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         image = (ImageView) findViewById(R.id.imageview_main);
-
-        addImageClickListener(R.id.imageview_profile, R.drawable.profile_picture);
-        addImageClickListener(R.id.imageview_monalise, R.drawable.mona_lisa);
-        addImageClickListener(R.id.imageview_magritte, R.drawable.magritte);
-        addImageClickListener(R.id.imageview_android, R.drawable.android);
-
+        initializeThumbnailClickListeners();
         setImageResource(R.drawable.profile_picture);
     }
 
-    private void addImageClickListener(@IdRes int viewId, @DrawableRes final int drawable) {
+    private void initializeThumbnailClickListeners() {
+        addThumbnailClickListener(R.id.imageview_profile, R.drawable.profile_picture);
+        addThumbnailClickListener(R.id.imageview_monalise, R.drawable.mona_lisa);
+        addThumbnailClickListener(R.id.imageview_magritte, R.drawable.magritte);
+        addThumbnailClickListener(R.id.imageview_android, R.drawable.android);
+    }
+
+    private void addThumbnailClickListener(@IdRes int viewId, @DrawableRes final int drawable) {
         findViewById(viewId).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
