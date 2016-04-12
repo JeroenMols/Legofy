@@ -81,7 +81,7 @@ public class LegofyEffect implements Effect {
     public Bitmap nextFrame() {
 
         for (int i = 0; i < bricksPerFrame; i++) {
-            if (currentPosition < positions.size() - 1) {
+            if (currentPosition < positions.size()) {
                 int shuffledPosition = positions.get(currentPosition);
                 drawBrick(shuffledPosition);
                 currentPosition++;
