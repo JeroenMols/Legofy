@@ -95,9 +95,9 @@ public class MainActivity extends AppCompatActivity {
         bmOptions.inJustDecodeBounds = true;
         BitmapFactory.decodeFileDescriptor(photo, null, bmOptions);
 
-        int scaleFactor = Math.min(bmOptions.outWidth / image.getWidth(), bmOptions.outHeight / image.getHeight());
+        int scaleInt = getScalingFactor(bmOptions.outWidth, bmOptions.outHeight);
         bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inSampleSize = scaleInt;
         bmOptions.inPurgeable = true;
 
         return BitmapFactory.decodeFileDescriptor(photo, null, bmOptions);
@@ -113,5 +113,13 @@ public class MainActivity extends AppCompatActivity {
         return parcelFileDescriptor.getFileDescriptor();
     }
 
+    private int getScalingFactor(int outWidth, int outHeight) {
+        float scaleFactor = Math.min(((float) outWidth) / image.getWidth(), ((float) outHeight) / image.getHeight());
+        int scaleInt = (int) scaleFactor;
+        if (scaleFactor > ((int) scaleFactor) + 0.7) {
+            scaleInt = (int) Math.ceil(scaleFactor);
+        }
+        return scaleInt;
+    }
 }
 
