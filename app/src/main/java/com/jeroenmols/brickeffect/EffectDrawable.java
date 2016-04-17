@@ -16,6 +16,7 @@ public class EffectDrawable extends Drawable implements Drawable.Callback {
 
     private Paint paint;
     private Bitmap originalBitmap;
+    private Bitmap resizedBitmap;
     private Effect effect;
 
     private Runnable animationRunnable = new Runnable() {
@@ -36,7 +37,7 @@ public class EffectDrawable extends Drawable implements Drawable.Callback {
 
     public void applyEffect(Effect effect) {
         this.effect = effect;
-        effect.initialize(originalBitmap);
+        resizedBitmap = null;
         scheduleNextAnimationFrame();
     }
 
@@ -47,11 +48,16 @@ public class EffectDrawable extends Drawable implements Drawable.Callback {
 
     @Override
     public void draw(Canvas canvas) {
-        Rect srcRect = new Rect(0, 0, originalBitmap.getHeight(), originalBitmap.getWidth());
-        Rect destRect = createDestinationRectangle(canvas, originalBitmap);
+        if (resizedBitmap == null) {
+            resizedBitmap = resizeOriginalBitmap(canvas.getWidth(), canvas.getHeight());
+            recycleOriginalBitmap();
+            effect.initialize(resizedBitmap);
+        }
 
-        canvas.drawBitmap(originalBitmap, srcRect, destRect, paint);
+        Rect srcRect = new Rect(0, 0, resizedBitmap.getWidth(), resizedBitmap.getHeight());
+        Rect destRect = createDestinationRectangle(canvas, resizedBitmap);
 
+        canvas.drawBitmap(resizedBitmap, srcRect, destRect, paint);
         if (effect != null) {
             Bitmap bitmap = effect.nextFrame();
             srcRect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
@@ -60,12 +66,26 @@ public class EffectDrawable extends Drawable implements Drawable.Callback {
     }
 
     @NonNull
+    private Bitmap resizeOriginalBitmap(int width, int height) {
+        float scaleX = ((float) width) / originalBitmap.getWidth();
+        float scaleY = ((float) height) / originalBitmap.getHeight();
+        float scale = Math.min(scaleX, scaleY);
+
+        return Bitmap.createScaledBitmap(originalBitmap, (int) (originalBitmap.getWidth() * scale), (int) (originalBitmap.getHeight() * scale), true);
+    }
+
+    private void recycleOriginalBitmap() {
+        originalBitmap.recycle();
+        originalBitmap = null;
+    }
+
+    @NonNull
     private Rect createDestinationRectangle(Canvas canvas, Bitmap bitmap) {
         float scaleX = ((float) canvas.getWidth()) / bitmap.getWidth();
         float scaleY = ((float) canvas.getHeight()) / bitmap.getHeight();
 
         Rect destRect;
-        if (shouldCenterHorizontally(scaleX, scaleY)) {
+        if (isWideImage(scaleX, scaleY)) {
             destRect = createHorizontalCenteredRectangle(canvas, bitmap, scaleY);
         } else {
             destRect = createVerticallyCenteredRectangle(canvas, bitmap, scaleX);
@@ -73,7 +93,7 @@ public class EffectDrawable extends Drawable implements Drawable.Callback {
         return destRect;
     }
 
-    private boolean shouldCenterHorizontally(float scaleX, float scaleY) {
+    private boolean isWideImage(float scaleX, float scaleY) {
         return scaleX > scaleY;
     }
 
