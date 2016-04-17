@@ -18,7 +18,7 @@ import java.io.FileNotFoundException;
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_IMAGE_GET = 1;
-    private static final int GRANULARITY = 64;
+    private static final int AMOUNT_OF_BRICKS_IN_WIDTH = 40;
     public static final int ANIM_DURATION_MS = 300;
 
     private ImageView image;
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private void setImageBitmap(Bitmap bitmap) {
         EffectDrawable customDrawable = new EffectDrawable(bitmap);
         this.image.setImageDrawable(customDrawable);
-        customDrawable.applyEffect(new LegofyEffect(getResources(), GRANULARITY, ANIM_DURATION_MS));
+        customDrawable.applyEffect(new LegofyEffect(getResources(), AMOUNT_OF_BRICKS_IN_WIDTH, ANIM_DURATION_MS));
     }
 
     public void selectImage() {

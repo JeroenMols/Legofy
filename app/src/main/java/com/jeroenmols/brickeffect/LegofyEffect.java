@@ -18,12 +18,13 @@ import java.util.List;
 public class LegofyEffect implements Effect {
 
     private final int duration;
+    private final Resources resources;
     private int bricksPerFrame;
-    private int granularity = 1;
+    private int bricksPerWidth = 20;
 
     private Bitmap baseBitmap;
     private Bitmap legofiedBitmap;
-    private final Bitmap brickBitmap;
+    private Bitmap brickBitmap;
     private int amountOfBricks;
     private Canvas canvas;
     private Paint paint;
@@ -31,21 +32,26 @@ public class LegofyEffect implements Effect {
     private List<Integer> positions;
     private int currentPosition;
 
-    public LegofyEffect(Resources resources, int granularity, int duration) {
-        if (granularity > 0) {
-            this.granularity = granularity;
+    public LegofyEffect(Resources resources, int bricksPerWidth, int duration) {
+        if (bricksPerWidth > 0) {
+            this.bricksPerWidth = bricksPerWidth;
         }
-        brickBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.brick), granularity, granularity, false);
+        this.resources = resources;
         this.duration = duration;
     }
 
     @Override
     public void initialize(Bitmap bitmap) {
-        int imageWidth = bitmap.getWidth() / granularity;
-        int imageHeight = bitmap.getHeight() / granularity;
+        int brickSize = bitmap.getWidth() / bricksPerWidth;
+
+        int imageWidth = bricksPerWidth;
+        int imageHeight = (int) (((float) bitmap.getHeight()) / bitmap.getWidth() * bricksPerWidth);
+
+        brickBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.brick), brickSize, brickSize, false);
+
 
         baseBitmap = Bitmap.createScaledBitmap(bitmap, imageWidth, imageHeight, true);
-        legofiedBitmap = Bitmap.createBitmap(imageWidth * granularity, imageHeight * granularity, Bitmap.Config.ARGB_4444);
+        legofiedBitmap = Bitmap.createBitmap(imageWidth * brickSize, imageHeight * brickSize, Bitmap.Config.ARGB_4444);
         amountOfBricks = imageWidth * imageHeight;
 
         canvas = new Canvas(legofiedBitmap);
@@ -95,6 +101,6 @@ public class LegofyEffect implements Effect {
         int xPos = shuffledPosition % baseBitmap.getWidth();
         int yPos = shuffledPosition / baseBitmap.getWidth();
         paint.setColorFilter(new PorterDuffColorFilter(baseBitmap.getPixel(xPos, yPos), PorterDuff.Mode.OVERLAY));
-        canvas.drawBitmap(brickBitmap, xPos * granularity, yPos * granularity, paint);
+        canvas.drawBitmap(brickBitmap, xPos * brickBitmap.getWidth(), yPos * brickBitmap.getHeight(), paint);
     }
 }
