@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         addThumbnailClickListener(R.id.imageview_profile, R.drawable.profile_picture);
         addThumbnailClickListener(R.id.imageview_monalise, R.drawable.mona_lisa);
         addThumbnailClickListener(R.id.imageview_magritte, R.drawable.magritte);
-        addThumbnailClickListener(R.id.imageview_android, R.drawable.android);
+        addThumbnailClickListener(R.id.imageview_plusbutton, R.drawable.android);
     }
 
     private void addThumbnailClickListener(@IdRes int viewId, @DrawableRes final int drawable) {
