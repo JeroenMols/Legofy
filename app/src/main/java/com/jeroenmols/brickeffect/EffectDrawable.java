@@ -41,6 +41,10 @@ public class EffectDrawable extends Drawable implements Drawable.Callback {
         scheduleNextAnimationFrame();
     }
 
+    public Bitmap getEffectBitmap() {
+        return effect.nextFrame();
+    }
+
     private void scheduleNextAnimationFrame() {
         unscheduleSelf(animationRunnable);
         scheduleSelf(animationRunnable, SystemClock.uptimeMillis() + effect.getFrameDuration());

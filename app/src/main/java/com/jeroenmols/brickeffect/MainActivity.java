@@ -8,12 +8,17 @@ import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
+import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +38,13 @@ public class MainActivity extends AppCompatActivity {
         thumbnail = (ImageView) findViewById(R.id.imageview_thumbnail);
         initializeThumbnailClickListeners();
         setImageResource(R.drawable.profile_picture);
+
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareImage();
+            }
+        });
     }
 
     private void initializeThumbnailClickListeners() {
@@ -120,6 +132,40 @@ public class MainActivity extends AppCompatActivity {
             scaleInt = (int) Math.ceil(scaleFactor);
         }
         return scaleInt;
+    }
+
+    private void shareImage() {
+        File savedImage = saveBitmapToCache();
+        Uri contentUri = FileProvider.getUriForFile(this, "com.jeroenmols.brickeffect.fileprovider", savedImage);
+
+        if (contentUri != null) {
+            grantUriPermission(getPackageName(), contentUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+            Intent shareIntent = new Intent();
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); // temp permission for receiving app to read this file
+            shareIntent.setDataAndType(contentUri, getContentResolver().getType(contentUri));
+            shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
+            startActivity(Intent.createChooser(shareIntent, "Choose an app"));
+        }
+    }
+
+    private File saveBitmapToCache() {
+        File cachePath = new File(getCacheDir(), "images");
+        cachePath.mkdirs();
+        File imageFile = new File(cachePath, String.format("%s.jpg", UUID.randomUUID().toString()));
+
+        try {
+            FileOutputStream stream = new FileOutputStream(imageFile);
+            Bitmap effectBitmap = ((EffectDrawable) image.getDrawable()).getEffectBitmap();
+            effectBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            stream.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return imageFile;
     }
 }
 
