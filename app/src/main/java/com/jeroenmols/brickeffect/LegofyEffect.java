@@ -92,13 +92,9 @@ public class LegofyEffect implements Effect {
     }
 
     private void drawBrick(int shuffledPosition) {
-        //            if (fastmode) {
         int xPos = shuffledPosition % baseBitmap.getWidth();
         int yPos = shuffledPosition / baseBitmap.getWidth();
         paint.setColorFilter(new PorterDuffColorFilter(baseBitmap.getPixel(xPos, yPos), PorterDuff.Mode.OVERLAY));
-//            } else {
-//                paint.setColorFilter(new PorterDuffColorFilter(getColor(bitmap, i, j, granularity), PorterDuff.Mode.OVERLAY));
-//            }
         canvas.drawBitmap(brickBitmap, xPos * granularity, yPos * granularity, paint);
     }
 }
