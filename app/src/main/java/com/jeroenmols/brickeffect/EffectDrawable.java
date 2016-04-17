@@ -54,7 +54,7 @@ public class EffectDrawable extends Drawable implements Drawable.Callback {
 
         if (effect != null) {
             Bitmap bitmap = effect.nextFrame();
-            srcRect = new Rect(0, 0, bitmap.getHeight(), bitmap.getWidth());
+            srcRect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
             canvas.drawBitmap(bitmap, srcRect, destRect, paint);
         }
     }
@@ -87,9 +87,9 @@ public class EffectDrawable extends Drawable implements Drawable.Callback {
 
     @NonNull
     private Rect createHorizontalCenteredRectangle(Canvas canvas, Bitmap bitmap, float scaleY) {
-        int translationX = (int) (canvas.getWidth() - (scaleY * bitmap.getWidth())) / 2;
         int scaledWidth = (int) (scaleY * bitmap.getWidth());
         int scaledHeight = (int) (scaleY * bitmap.getHeight());
+        int translationX = (int) (canvas.getWidth() - (scaleY * bitmap.getWidth())) / 2;
         return new Rect(translationX, 0, scaledWidth + translationX, scaledHeight);
     }
 
