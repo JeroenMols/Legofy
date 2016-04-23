@@ -44,4 +44,14 @@ public class LegofyTest {
 
         assertThat(processedBitmap.getWidth()).isEqualTo(230);
     }
+
+    @Test
+    public void heightMultipleOfBricks() throws Exception {
+        Bitmap mockBitmap = mock(Bitmap.class);
+        doReturn(257).when(mockBitmap).getHeight();
+
+        Bitmap processedBitmap = new Legofy(new TestBitmapWrapper(), 10).processBitmap(mockBitmap);
+
+        assertThat(processedBitmap.getHeight()).isEqualTo(250);
+    }
 }

@@ -17,7 +17,8 @@ public class Legofy {
 
     public Bitmap processBitmap(Bitmap bitmap) {
         int width = (bitmap.getWidth() / bricksInWidth) * bricksInWidth;
-        Bitmap processedBitmap = bitmapWrapper.createBitmap(width, 0, null);
+        int height = (bitmap.getHeight() / bricksInWidth) * bricksInWidth;
+        Bitmap processedBitmap = bitmapWrapper.createBitmap(width, height, null);
         return processedBitmap;
     }
 }
