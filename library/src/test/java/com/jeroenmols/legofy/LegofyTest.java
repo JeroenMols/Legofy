@@ -1,15 +1,17 @@
 package com.jeroenmols.legofy;
 
-import org.junit.Test;
+import android.test.suitebuilder.annotation.SmallTest;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
  */
+@SmallTest
 public class LegofyTest {
+
     @Test
-    public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
+    public void canInstantiate() throws Exception {
+        new Legofy();
     }
 }
