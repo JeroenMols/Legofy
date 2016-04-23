@@ -17,12 +17,17 @@ public class LegofyTest {
 
     @Test
     public void createWithNumberOfWidthBricks() throws Exception {
-        new Legofy(null, 10);
+        new Legofy(10);
     }
 
     @Test
     public void createWithBitmapWrapper() throws Exception {
-        new Legofy(mock(BitmapWrapper.class), 0);
+        new Legofy(mock(BitmapWrapper.class), null, 0);
+    }
+
+    @Test
+    public void createWithBrickDrawer() throws Exception {
+        new Legofy(null, mock(DrawingWrapper.class), 0);
     }
 
     @Test
@@ -30,7 +35,7 @@ public class LegofyTest {
         Bitmap mockBitmap = mock(Bitmap.class);
         doReturn(234).when(mockBitmap).getWidth();
 
-        Bitmap processedBitmap = new Legofy(new TestBitmapWrapper(), 10).processBitmap(mockBitmap);
+        Bitmap processedBitmap = new Legofy(new TestBitmapWrapper(), mock(DrawingWrapper.class), 10).processBitmap(mockBitmap);
 
         assertThat(processedBitmap).isNotNull();
     }
@@ -40,7 +45,7 @@ public class LegofyTest {
         Bitmap mockBitmap = mock(Bitmap.class);
         doReturn(234).when(mockBitmap).getWidth();
 
-        Bitmap processedBitmap = new Legofy(new TestBitmapWrapper(), 10).processBitmap(mockBitmap);
+        Bitmap processedBitmap = new Legofy(new TestBitmapWrapper(), mock(DrawingWrapper.class), 10).processBitmap(mockBitmap);
 
         assertThat(processedBitmap.getWidth()).isEqualTo(230);
     }
@@ -50,7 +55,7 @@ public class LegofyTest {
         Bitmap mockBitmap = mock(Bitmap.class);
         doReturn(257).when(mockBitmap).getHeight();
 
-        Bitmap processedBitmap = new Legofy(new TestBitmapWrapper(), 10).processBitmap(mockBitmap);
+        Bitmap processedBitmap = new Legofy(new TestBitmapWrapper(), mock(DrawingWrapper.class), 10).processBitmap(mockBitmap);
 
         assertThat(processedBitmap.getHeight()).isEqualTo(250);
     }

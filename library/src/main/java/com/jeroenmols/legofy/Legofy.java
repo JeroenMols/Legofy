@@ -10,7 +10,11 @@ public class Legofy {
     private final int bricksInWidth;
     private final BitmapWrapper bitmapWrapper;
 
-    public Legofy(BitmapWrapper bitmapWrapper, int bricksInWidth) {
+    public Legofy(int bricksInWidth) {
+        this(new BitmapWrapper(), new DrawingWrapper(), bricksInWidth);
+    }
+
+    protected Legofy(BitmapWrapper bitmapWrapper, DrawingWrapper drawingWrapper, int bricksInWidth) {
         this.bitmapWrapper = bitmapWrapper;
         this.bricksInWidth = bricksInWidth;
     }
