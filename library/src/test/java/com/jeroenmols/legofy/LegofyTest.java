@@ -16,17 +16,17 @@ import static org.mockito.Mockito.mock;
 public class LegofyTest {
 
     @Test
-    public void canInstantiate() throws Exception {
-        new Legofy();
-    }
-
-    @Test
     public void processBitmap() throws Exception {
         Bitmap mockBitmap = mock(Bitmap.class);
 
-        Bitmap processedBitmap = new Legofy().processBitmap(mockBitmap);
+        Bitmap processedBitmap = new Legofy(0).processBitmap(mockBitmap);
 
         assertThat(processedBitmap).isNotNull();
         assertNotNull(processedBitmap);
+    }
+
+    @Test
+    public void specifyNumberOfBricks() throws Exception {
+        new Legofy(10);
     }
 }
