@@ -16,15 +16,6 @@ import static org.mockito.Mockito.mock;
 public class LegofyTest {
 
     @Test
-    public void processBitmap() throws Exception {
-        Bitmap mockBitmap = mock(Bitmap.class);
-
-        Bitmap processedBitmap = new Legofy(mock(BitmapWrapper.class), 0).processBitmap(mockBitmap);
-
-        assertThat(processedBitmap).isNotNull();
-    }
-
-    @Test
     public void createWithNumberOfWidthBricks() throws Exception {
         new Legofy(null, 10);
     }
@@ -34,5 +25,23 @@ public class LegofyTest {
         new Legofy(mock(BitmapWrapper.class), 0);
     }
 
+    @Test
+    public void processBitmap() throws Exception {
+        Bitmap mockBitmap = mock(Bitmap.class);
+        doReturn(234).when(mockBitmap).getWidth();
+
+        Bitmap processedBitmap = new Legofy(new TestBitmapWrapper(), 10).processBitmap(mockBitmap);
+
+        assertThat(processedBitmap).isNotNull();
+    }
+
+    @Test
+    public void widthMultipleOfBricks() throws Exception {
+        Bitmap mockBitmap = mock(Bitmap.class);
+        doReturn(234).when(mockBitmap).getWidth();
+
+        Bitmap processedBitmap = new Legofy(new TestBitmapWrapper(), 10).processBitmap(mockBitmap);
+
+        assertThat(processedBitmap.getWidth()).isEqualTo(230);
     }
 }

@@ -8,12 +8,16 @@ import android.graphics.Bitmap;
 public class Legofy {
 
     private final int bricksInWidth;
+    private final BitmapWrapper bitmapWrapper;
 
-    public Legofy(BitmapWrapper mock, int bricksInWidth) {
+    public Legofy(BitmapWrapper bitmapWrapper, int bricksInWidth) {
+        this.bitmapWrapper = bitmapWrapper;
         this.bricksInWidth = bricksInWidth;
     }
 
     public Bitmap processBitmap(Bitmap bitmap) {
-        return bitmap;
+        int width = (bitmap.getWidth() / bricksInWidth) * bricksInWidth;
+        Bitmap processedBitmap = bitmapWrapper.createBitmap(width, 0, null);
+        return processedBitmap;
     }
 }
