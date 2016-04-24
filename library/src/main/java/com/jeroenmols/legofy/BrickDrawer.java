@@ -11,13 +11,13 @@ import android.graphics.PorterDuffColorFilter;
 /**
  * @author Jeroen Mols on 23/04/16.
  */
-public class DrawingWrapper {
+public class BrickDrawer {
 
     private final Paint paint;
     private final Canvas canvas;
     private Bitmap brickBitmap;
 
-    public DrawingWrapper() {
+    public BrickDrawer() {
         paint = new Paint();
         canvas = new Canvas();
     }
@@ -27,7 +27,7 @@ public class DrawingWrapper {
         brickBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.brick), brickSize, brickSize, false);
     }
 
-    public void drawBrick(Bitmap bitmap, int color, int xPos, int yPos, int width) {
+    public void drawBrick(int color, int xPos, int yPos, int width) {
         paint.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.OVERLAY));
         canvas.drawBitmap(brickBitmap, xPos * brickBitmap.getWidth(), yPos * brickBitmap.getHeight(), paint);
     }
