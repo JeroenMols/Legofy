@@ -14,3 +14,9 @@ script:
   - echo "Travis branch is $TRAVIS_BRANCH"
   - echo "Travis branch is in pull request $TRAVIS_PULL+REQUEST"
   - ./gradlew test
+
+before_install:
+  - pip install --user codecov
+
+after_success:
+  - codecov
