@@ -36,7 +36,7 @@ public class LegofyTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        legofy = new Legofy(new TestBitmapWrapper(), mockDrawer, BRICKS_INWIDTH);
+        legofy = new Legofy(new TestBitmapWrapper(), mockDrawer).amountOfBricks(BRICKS_INWIDTH);
     }
 
     @Test
@@ -70,18 +70,13 @@ public class LegofyTest {
     }
 
     @Test
-    public void createWithNumberOfWidthBricks() throws Exception {
-        new Legofy(10);
-    }
-
-    @Test
     public void createWithBitmapWrapper() throws Exception {
-        new Legofy(mock(BitmapWrapper.class), null, 0);
+        new Legofy(mock(BitmapWrapper.class), null);
     }
 
     @Test
     public void createWithBrickDrawer() throws Exception {
-        new Legofy(null, mock(BrickDrawer.class), 0);
+        new Legofy(null, mock(BrickDrawer.class));
     }
 
     @Test
@@ -115,7 +110,7 @@ public class LegofyTest {
     public void processedBitmapIsArgb4444() throws Exception {
         Bitmap mockBitmap = createMockBitmap(3 * BRICK_SIZE, 2 * BRICK_SIZE);
 
-        Bitmap processedBitmap = new Legofy(new TestBitmapWrapper(), mockDrawer, 3).processBitmap(null, mockBitmap);
+        Bitmap processedBitmap = new Legofy(new TestBitmapWrapper(), mockDrawer).amountOfBricks(3).processBitmap(null, mockBitmap);
 
         assertThat(processedBitmap.getConfig()).isEqualTo(Bitmap.Config.ARGB_4444);
     }
@@ -142,7 +137,7 @@ public class LegofyTest {
     public void drawFirstBrick() throws Exception {
         Bitmap mockBitmap = createMockBitmap(BRICK_SIZE, BRICK_SIZE);
 
-        new Legofy(new TestBitmapWrapper(), mockDrawer, 1).processBitmap(null, mockBitmap);
+        new Legofy(new TestBitmapWrapper(), mockDrawer).amountOfBricks(1).processBitmap(null, mockBitmap);
 
         verify(mockDrawer).drawBrick(anyInt(), eq(0), eq(0));
     }
@@ -151,7 +146,7 @@ public class LegofyTest {
     public void drawSecondHorizontalBrick() throws Exception {
         Bitmap mockBitmap = createMockBitmap(2 * BRICK_SIZE, BRICK_SIZE);
 
-        new Legofy(new TestBitmapWrapper(), mockDrawer, 2).processBitmap(null, mockBitmap);
+        new Legofy(new TestBitmapWrapper(), mockDrawer).amountOfBricks(2).processBitmap(null, mockBitmap);
 
         verify(mockDrawer).drawBrick(anyInt(), eq(BRICK_SIZE), eq(0));
     }
@@ -160,7 +155,7 @@ public class LegofyTest {
     public void drawSecondVerticalBrick() throws Exception {
         Bitmap mockBitmap = createMockBitmap(BRICK_SIZE, 2 * BRICK_SIZE);
 
-        new Legofy(new TestBitmapWrapper(), mockDrawer, 1).processBitmap(null, mockBitmap);
+        new Legofy(new TestBitmapWrapper(), mockDrawer).amountOfBricks(1).processBitmap(null, mockBitmap);
 
         verify(mockDrawer).drawBrick(anyInt(), eq(0), eq(BRICK_SIZE));
     }
@@ -170,7 +165,7 @@ public class LegofyTest {
         Bitmap mockBitmap = createMockBitmap(3 * BRICK_SIZE, 2 * BRICK_SIZE);
         BitmapWrapper mockWrapper = createMockBitmapWrapper(mockBitmap);
 
-        new Legofy(mockWrapper, mockDrawer, 3).processBitmap(null, mockBitmap);
+        new Legofy(mockWrapper, mockDrawer).amountOfBricks(3).processBitmap(null, mockBitmap);
 
         verify(mockWrapper).createScaledBitmap(mockBitmap, 3, 2, true);
     }
@@ -179,7 +174,7 @@ public class LegofyTest {
     public void drawFirstBrickWithDownScaledColor() throws Exception {
         Bitmap mockBitmap = createMockBitmap(BRICK_SIZE, BRICK_SIZE);
 
-        new Legofy(new TestBitmapWrapper(), mockDrawer, 1).processBitmap(null, mockBitmap);
+        new Legofy(new TestBitmapWrapper(), mockDrawer).amountOfBricks(1).processBitmap(null, mockBitmap);
 
         verify(mockDrawer).drawBrick(eq(TestBitmapWrapper.FIRST_COLOR), eq(0), eq(0));
     }
@@ -188,7 +183,7 @@ public class LegofyTest {
     public void drawSecondBrickWithDownScaledColor() throws Exception {
         Bitmap mockBitmap = createMockBitmap(2 * BRICK_SIZE, BRICK_SIZE);
 
-        new Legofy(new TestBitmapWrapper(), mockDrawer, 2).processBitmap(null, mockBitmap);
+        new Legofy(new TestBitmapWrapper(), mockDrawer).amountOfBricks(2).processBitmap(null, mockBitmap);
 
         verify(mockDrawer).drawBrick(eq(TestBitmapWrapper.SECOND_HORIZONTAL_COLOR), eq(BRICK_SIZE), eq(0));
     }

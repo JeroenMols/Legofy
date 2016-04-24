@@ -11,7 +11,7 @@ public class Legofy {
 
     public static final int DEFAULT_AMOUNTOFBRICKS = 20;
 
-    private int bricksInWidth;
+    private int bricksInWidth = DEFAULT_AMOUNTOFBRICKS;
     private BrickDrawer brickDrawer;
     private final BitmapWrapper bitmapWrapper;
 
@@ -27,18 +27,13 @@ public class Legofy {
         return this;
     }
 
-    public Legofy(int bricksInWidth) {
-        this(new BitmapWrapper(), new BrickDrawer(), bricksInWidth);
-    }
-
-    protected Legofy(BitmapWrapper bitmapWrapper, BrickDrawer brickDrawer, int bricksInWidth) {
+    protected Legofy(BitmapWrapper bitmapWrapper, BrickDrawer brickDrawer) {
         this.bitmapWrapper = bitmapWrapper;
         this.brickDrawer = brickDrawer;
-        this.bricksInWidth = bricksInWidth;
     }
 
     private Legofy(Context context) {
-        this(DEFAULT_AMOUNTOFBRICKS);
+        this(new BitmapWrapper(), new BrickDrawer());
     }
 
     public Bitmap processBitmap(Resources resources, Bitmap bitmap) {
