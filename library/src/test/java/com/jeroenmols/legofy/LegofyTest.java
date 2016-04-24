@@ -52,6 +52,15 @@ public class LegofyTest {
     }
 
     @Test
+    public void takeApplicationContext() throws Exception {
+        Context mockContext = mock(Context.class);
+
+        Legofy.with(mockContext);
+
+        verify(mockContext).getApplicationContext();
+    }
+
+    @Test
     public void createWithNumberOfWidthBricks() throws Exception {
         new Legofy(10);
     }

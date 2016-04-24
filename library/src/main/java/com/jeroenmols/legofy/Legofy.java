@@ -55,6 +55,6 @@ public class Legofy {
         if (context == null) {
             throw new RuntimeException("Context must not be null");
         }
-        return new Legofy(context);
+        return new Legofy(context.getApplicationContext());
     }
 }
