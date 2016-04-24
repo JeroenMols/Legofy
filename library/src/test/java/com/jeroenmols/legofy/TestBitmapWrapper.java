@@ -19,6 +19,7 @@ public class TestBitmapWrapper extends BitmapWrapper {
         Bitmap mockBitmap = mock(Bitmap.class);
         doReturn(width).when(mockBitmap).getWidth();
         doReturn(height).when(mockBitmap).getHeight();
+        doReturn(config).when(mockBitmap).getConfig();
         return mockBitmap;
     }
 

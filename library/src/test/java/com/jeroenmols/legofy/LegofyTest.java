@@ -81,6 +81,15 @@ public class LegofyTest {
     }
 
     @Test
+    public void processedBitmapIsArgb4444() throws Exception {
+        Bitmap mockBitmap = createMockBitmap(3 * BRICK_SIZE, 2 * BRICK_SIZE);
+
+        Bitmap processedBitmap = new Legofy(new TestBitmapWrapper(), mockDrawer, 3).processBitmap(null, mockBitmap);
+
+        assertThat(processedBitmap.getConfig()).isEqualTo(Bitmap.Config.ARGB_4444);
+    }
+
+    @Test
     public void setProcessedBitmapToBrickDrawer() throws Exception {
         Bitmap mockBitmap = createMockBitmap(BRICK_SIZE, BRICK_SIZE);
 

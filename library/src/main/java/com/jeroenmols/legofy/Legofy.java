@@ -43,6 +43,6 @@ public class Legofy {
     private Bitmap createBitmapForBrickSize(Bitmap bitmap, int brickSize) {
         int width = brickSize * bricksInWidth;
         int height = (bitmap.getHeight() / brickSize) * brickSize;
-        return bitmapWrapper.createBitmap(width, height, null);
+        return bitmapWrapper.createBitmap(width, height, Bitmap.Config.ARGB_4444);
     }
 }
