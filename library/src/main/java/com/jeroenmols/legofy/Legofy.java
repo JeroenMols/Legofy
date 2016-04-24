@@ -39,7 +39,7 @@ public class Legofy {
         this(context, new BitmapWrapper(), new BrickDrawer());
     }
 
-    public Bitmap processBitmap(Bitmap bitmap) {
+    public Bitmap convert(Bitmap bitmap) {
         int brickSize = bitmap.getWidth() / bricksInWidth;
 
         Bitmap processedBitmap = createBitmapForBrickSize(bitmap, brickSize);
