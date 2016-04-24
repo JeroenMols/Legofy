@@ -25,13 +25,22 @@ public class Legofy {
     public Bitmap processBitmap(Resources resources, Bitmap bitmap) {
         int brickSize = bitmap.getWidth() / bricksInWidth;
 
-        int width = brickSize * bricksInWidth;
-        int height = (bitmap.getHeight() / brickSize) * brickSize;
-
-        Bitmap processedBitmap = bitmapWrapper.createBitmap(width, height, null);
+        Bitmap processedBitmap = createBitmapForBrickSize(bitmap, brickSize);
         brickDrawer.setBitmap(resources, processedBitmap, brickSize);
 
-        brickDrawer.drawBrick(0, 0, 0, brickSize);
+        int amountOfBricks = processedBitmap.getWidth() * processedBitmap.getHeight() / brickSize / brickSize;
+        for (int i = 0; i < amountOfBricks; i++) {
+            int posX = i * brickSize % processedBitmap.getWidth();
+
+            brickDrawer.drawBrick(0, posX, 0, brickSize);
+        }
+
         return processedBitmap;
+    }
+
+    private Bitmap createBitmapForBrickSize(Bitmap bitmap, int brickSize) {
+        int width = brickSize * bricksInWidth;
+        int height = (bitmap.getHeight() / brickSize) * brickSize;
+        return bitmapWrapper.createBitmap(width, height, null);
     }
 }

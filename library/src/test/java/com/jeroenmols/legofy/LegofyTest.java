@@ -24,6 +24,7 @@ import static org.mockito.Mockito.verify;
 public class LegofyTest {
 
     public static final int BRICKS_INWIDTH = 10;
+    public static final int BRICK_SIZE = 30;
 
     @Mock
     private BrickDrawer mockDrawer;
@@ -79,7 +80,7 @@ public class LegofyTest {
 
     @Test
     public void setProcessedBitmapToBrickDrawer() throws Exception {
-        Bitmap mockBitmap = createMockBitmap(30, 30);
+        Bitmap mockBitmap = createMockBitmap(BRICK_SIZE, BRICK_SIZE);
 
         Bitmap processedBitmap = legofy.processBitmap(null, mockBitmap);
 
@@ -96,12 +97,21 @@ public class LegofyTest {
     }
 
     @Test
-    public void drawBrickAtFirstPosition() throws Exception {
-        Bitmap mockBitmap = createMockBitmap(30, 30);
+    public void drawFirstBrick() throws Exception {
+        Bitmap mockBitmap = createMockBitmap(BRICK_SIZE, BRICK_SIZE);
 
         new Legofy(new TestBitmapWrapper(), mockDrawer, 1).processBitmap(null, mockBitmap);
 
-        verify(mockDrawer).drawBrick(anyInt(), eq(0), eq(0), eq(30));
+        verify(mockDrawer).drawBrick(anyInt(), eq(0), eq(0), eq(BRICK_SIZE));
+    }
+
+    @Test
+    public void drawSecondHorizontalBrick() throws Exception {
+        Bitmap mockBitmap = createMockBitmap(2 * BRICK_SIZE, BRICK_SIZE);
+
+        new Legofy(new TestBitmapWrapper(), mockDrawer, 2).processBitmap(null, mockBitmap);
+
+        verify(mockDrawer).drawBrick(anyInt(), eq(BRICK_SIZE), eq(0), eq(BRICK_SIZE));
     }
 
     private Bitmap createMockBitmap(int width, int height) {
