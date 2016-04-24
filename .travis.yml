@@ -1,0 +1,16 @@
+language: android
+
+notifications:
+  email:
+    - jmols.mobile@gmail.com
+
+android:
+  components:
+    - build-tools-23.0.3
+    - android-23
+    - extra-android-m2repository
+
+script:
+  - echo "Travis branch is $TRAVIS_BRANCH"
+  - echo "Travis branch is in pull request $TRAVIS_PULL+REQUEST"
+  - ./gradlew test
