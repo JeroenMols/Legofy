@@ -2,7 +2,6 @@ package com.jeroenmols.legofy;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 
 /**
  * @author Jeroen Mols on 23/04/16.
@@ -31,9 +30,11 @@ public class Legofy {
 
         int amountOfBricks = processedBitmap.getWidth() * processedBitmap.getHeight() / brickSize / brickSize;
         for (int i = 0; i < amountOfBricks; i++) {
-            int posX = i % bricksInWidth * brickSize;
-            int posY = i / bricksInWidth * brickSize;
-            brickDrawer.drawBrick(Color.RED, posX, posY);
+            int posX = i % bricksInWidth;
+            int posY = i / bricksInWidth;
+
+            Bitmap scaledBitmap = bitmapWrapper.createScaledBitmap(bitmap, 0, 0, true);
+            brickDrawer.drawBrick(scaledBitmap.getPixel(posX, posY), posX * brickSize, posY * brickSize);
         }
 
         return processedBitmap;

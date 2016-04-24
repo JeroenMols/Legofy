@@ -12,6 +12,7 @@ import static org.mockito.Mockito.mock;
 public class TestBitmapWrapper extends BitmapWrapper {
 
     public static final int FIRST_COLOR = Color.RED;
+    public static final int SECOND_HORIZONTAL_COLOR = Color.BLUE;
 
     @Override
     public Bitmap createBitmap(int width, int height, Bitmap.Config config) {
@@ -25,6 +26,7 @@ public class TestBitmapWrapper extends BitmapWrapper {
     public Bitmap createScaledBitmap(Bitmap src, int dstWidth, int dstHeight, boolean filter) {
         Bitmap mockBitmap = mock(Bitmap.class);
         doReturn(FIRST_COLOR).when(mockBitmap).getPixel(0, 0);
-        return super.createScaledBitmap(src, dstWidth, dstHeight, filter);
+        doReturn(SECOND_HORIZONTAL_COLOR).when(mockBitmap).getPixel(1, 0);
+        return mockBitmap;
     }
 }

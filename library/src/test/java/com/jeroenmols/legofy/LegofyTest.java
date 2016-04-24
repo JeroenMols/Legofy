@@ -133,6 +133,16 @@ public class LegofyTest {
 
     }
 
+    @Test
+    public void drawSecondBrickWithDownScaledColor() throws Exception {
+        Bitmap mockBitmap = createMockBitmap(2 * BRICK_SIZE, BRICK_SIZE);
+
+        new Legofy(new TestBitmapWrapper(), mockDrawer, 2).processBitmap(null, mockBitmap);
+
+        verify(mockDrawer).drawBrick(eq(TestBitmapWrapper.SECOND_HORIZONTAL_COLOR), eq(BRICK_SIZE), eq(0));
+
+    }
+
     private Bitmap createMockBitmap(int width, int height) {
         Bitmap mockBitmap = mock(Bitmap.class);
         doReturn(width).when(mockBitmap).getWidth();
