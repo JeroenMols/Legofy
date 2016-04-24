@@ -2,6 +2,7 @@ package com.jeroenmols.legofy;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 
 /**
  * @author Jeroen Mols on 23/04/16.
@@ -32,8 +33,7 @@ public class Legofy {
         for (int i = 0; i < amountOfBricks; i++) {
             int posX = i % bricksInWidth * brickSize;
             int posY = i / bricksInWidth * brickSize;
-
-            brickDrawer.drawBrick(0, posX, posY);
+            brickDrawer.drawBrick(Color.RED, posX, posY);
         }
 
         return processedBitmap;

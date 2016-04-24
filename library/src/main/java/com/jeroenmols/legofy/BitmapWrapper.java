@@ -10,4 +10,8 @@ public class BitmapWrapper {
     public Bitmap createBitmap(int width, int height, Bitmap.Config config) {
         return Bitmap.createBitmap(width, height, config);
     }
+
+    public Bitmap createScaledBitmap(Bitmap src, int dstWidth, int dstHeight, boolean filter) {
+        return Bitmap.createScaledBitmap(src, dstWidth, dstHeight, filter);
+    }
 }
