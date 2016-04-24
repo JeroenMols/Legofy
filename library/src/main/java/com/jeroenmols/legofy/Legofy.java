@@ -9,6 +9,8 @@ import android.graphics.Bitmap;
  */
 public class Legofy {
 
+    public static final int DEFAULT_AMOUNTOFBRICKS = 20;
+
     private int bricksInWidth;
     private BrickDrawer brickDrawer;
     private final BitmapWrapper bitmapWrapper;
@@ -35,8 +37,8 @@ public class Legofy {
         this.bricksInWidth = bricksInWidth;
     }
 
-    public Legofy(Context context) {
-        this(10);
+    private Legofy(Context context) {
+        this(DEFAULT_AMOUNTOFBRICKS);
     }
 
     public Bitmap processBitmap(Resources resources, Bitmap bitmap) {
