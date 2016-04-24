@@ -42,8 +42,13 @@ public class LegofyTest {
     @Test
     public void createViaFactory() throws Exception {
         Legofy legofy = Legofy.with(mock(Context.class));
-        
+
         assertThat(legofy).isNotNull();
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void throwExceptionWhenContextNull() throws Exception {
+        Legofy.with(null);
     }
 
     @Test

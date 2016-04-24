@@ -52,6 +52,9 @@ public class Legofy {
     }
 
     public static Legofy with(Context context) {
+        if (context == null) {
+            throw new RuntimeException("Context must not be null");
+        }
         return new Legofy(context);
     }
 }
