@@ -23,12 +23,16 @@ import static org.mockito.Mockito.verify;
 @SmallTest
 public class LegofyTest {
 
+    public static final int BRICKS_SIZE = 10;
+
     @Mock
     private BrickDrawer mockDrawer;
+    private Legofy legofy;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
+        legofy = new Legofy(new TestBitmapWrapper(), mockDrawer, BRICKS_SIZE);
     }
 
     @Test
@@ -50,7 +54,7 @@ public class LegofyTest {
     public void processBitmap() throws Exception {
         Bitmap mockBitmap = createMockBitmap(234, 257);
 
-        Bitmap processedBitmap = new Legofy(new TestBitmapWrapper(), mockDrawer, 10).processBitmap(null, mockBitmap);
+        Bitmap processedBitmap = legofy.processBitmap(null, mockBitmap);
 
         assertThat(processedBitmap).isNotNull();
     }
@@ -59,7 +63,7 @@ public class LegofyTest {
     public void widthMultipleOfBricks() throws Exception {
         Bitmap mockBitmap = createMockBitmap(234, 257);
 
-        Bitmap processedBitmap = new Legofy(new TestBitmapWrapper(), mockDrawer, 10).processBitmap(null, mockBitmap);
+        Bitmap processedBitmap = legofy.processBitmap(null, mockBitmap);
 
         assertThat(processedBitmap.getWidth()).isEqualTo(230);
     }
@@ -68,7 +72,7 @@ public class LegofyTest {
     public void heightMultipleOfBricks() throws Exception {
         Bitmap mockBitmap = createMockBitmap(234, 257);
 
-        Bitmap processedBitmap = new Legofy(new TestBitmapWrapper(), mockDrawer, 10).processBitmap(null, mockBitmap);
+        Bitmap processedBitmap = legofy.processBitmap(null, mockBitmap);
 
         assertThat(processedBitmap.getHeight()).isEqualTo(250);
     }
@@ -77,7 +81,7 @@ public class LegofyTest {
     public void setProcessedBitmapToBrickDrawer() throws Exception {
         Bitmap mockBitmap = createMockBitmap(15, 15);
 
-        Bitmap processedBitmap = new Legofy(new TestBitmapWrapper(), mockDrawer, 10).processBitmap(null, mockBitmap);
+        Bitmap processedBitmap = legofy.processBitmap(null, mockBitmap);
 
         verify(mockDrawer).setBitmap(any(Resources.class), eq(processedBitmap), anyInt());
     }
