@@ -13,7 +13,7 @@ android:
 script:
   - echo "Travis branch is $TRAVIS_BRANCH"
   - echo "Travis branch is in pull request $TRAVIS_PULL+REQUEST"
-  - ./gradlew test
+  - ./gradlew jacocoTestReport
 
 before_install:
   - pip install --user codecov
