@@ -102,7 +102,7 @@ public class LegofyTest {
 
         new Legofy(new TestBitmapWrapper(), mockDrawer, 1).processBitmap(null, mockBitmap);
 
-        verify(mockDrawer).drawBrick(anyInt(), eq(0), eq(0), eq(BRICK_SIZE));
+        verify(mockDrawer).drawBrick(anyInt(), eq(0), eq(0));
     }
 
     @Test
@@ -111,7 +111,16 @@ public class LegofyTest {
 
         new Legofy(new TestBitmapWrapper(), mockDrawer, 2).processBitmap(null, mockBitmap);
 
-        verify(mockDrawer).drawBrick(anyInt(), eq(BRICK_SIZE), eq(0), eq(BRICK_SIZE));
+        verify(mockDrawer).drawBrick(anyInt(), eq(BRICK_SIZE), eq(0));
+    }
+
+    @Test
+    public void drawSecondVerticalBrick() throws Exception {
+        Bitmap mockBitmap = createMockBitmap(BRICK_SIZE, 2 * BRICK_SIZE);
+
+        new Legofy(new TestBitmapWrapper(), mockDrawer, 1).processBitmap(null, mockBitmap);
+
+        verify(mockDrawer).drawBrick(anyInt(), eq(0), eq(BRICK_SIZE));
     }
 
     private Bitmap createMockBitmap(int width, int height) {

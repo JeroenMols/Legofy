@@ -27,8 +27,8 @@ public class BrickDrawer {
         brickBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.brick), brickSize, brickSize, false);
     }
 
-    public void drawBrick(int color, int xPos, int yPos, int width) {
+    public void drawBrick(int color, int xPos, int yPos) {
         paint.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.OVERLAY));
-        canvas.drawBitmap(brickBitmap, xPos * brickBitmap.getWidth(), yPos * brickBitmap.getHeight(), paint);
+        canvas.drawBitmap(brickBitmap, xPos, yPos, paint);
     }
 }

@@ -30,9 +30,10 @@ public class Legofy {
 
         int amountOfBricks = processedBitmap.getWidth() * processedBitmap.getHeight() / brickSize / brickSize;
         for (int i = 0; i < amountOfBricks; i++) {
-            int posX = i * brickSize % processedBitmap.getWidth();
+            int posX = i % bricksInWidth * brickSize;
+            int posY = i / bricksInWidth * brickSize;
 
-            brickDrawer.drawBrick(0, posX, 0, brickSize);
+            brickDrawer.drawBrick(0, posX, posY);
         }
 
         return processedBitmap;
