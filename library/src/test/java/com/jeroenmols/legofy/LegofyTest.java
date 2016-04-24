@@ -1,5 +1,6 @@
 package com.jeroenmols.legofy;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.test.suitebuilder.annotation.SmallTest;
@@ -36,6 +37,13 @@ public class LegofyTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         legofy = new Legofy(new TestBitmapWrapper(), mockDrawer, BRICKS_INWIDTH);
+    }
+
+    @Test
+    public void createViaFactory() throws Exception {
+        Legofy legofy = Legofy.with(mock(Context.class));
+        
+        assertThat(legofy).isNotNull();
     }
 
     @Test

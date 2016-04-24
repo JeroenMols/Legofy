@@ -1,5 +1,6 @@
 package com.jeroenmols.legofy;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 
@@ -20,6 +21,10 @@ public class Legofy {
         this.bitmapWrapper = bitmapWrapper;
         this.brickDrawer = brickDrawer;
         this.bricksInWidth = bricksInWidth;
+    }
+
+    public Legofy(Context context) {
+        this(10);
     }
 
     public Bitmap processBitmap(Resources resources, Bitmap bitmap) {
@@ -44,5 +49,9 @@ public class Legofy {
         int width = brickSize * bricksInWidth;
         int height = (bitmap.getHeight() / brickSize) * brickSize;
         return bitmapWrapper.createBitmap(width, height, Bitmap.Config.ARGB_4444);
+    }
+
+    public static Legofy with(Context context) {
+        return new Legofy(context);
     }
 }
