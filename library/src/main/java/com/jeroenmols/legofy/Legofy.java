@@ -33,7 +33,7 @@ public class Legofy {
             int posX = i % bricksInWidth;
             int posY = i / bricksInWidth;
 
-            Bitmap scaledBitmap = bitmapWrapper.createScaledBitmap(bitmap, 0, 0, true);
+            Bitmap scaledBitmap = bitmapWrapper.createScaledBitmap(bitmap, bricksInWidth, amountOfBricks / bricksInWidth, true);
             brickDrawer.drawBrick(scaledBitmap.getPixel(posX, posY), posX * brickSize, posY * brickSize);
         }
 

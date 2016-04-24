@@ -11,10 +11,13 @@ import org.mockito.MockitoAnnotations;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 /**
@@ -28,6 +31,7 @@ public class LegofyTest {
 
     @Mock
     private BrickDrawer mockDrawer;
+
     private Legofy legofy;
 
     @Before
@@ -124,13 +128,22 @@ public class LegofyTest {
     }
 
     @Test
+    public void scaleImageForColorExtraction() throws Exception {
+        Bitmap mockBitmap = createMockBitmap(3 * BRICK_SIZE, 2 * BRICK_SIZE);
+        BitmapWrapper mockWrapper = createMockBitmapWrapper(mockBitmap);
+
+        new Legofy(mockWrapper, mockDrawer, 3).processBitmap(null, mockBitmap);
+
+        verify(mockWrapper, atLeastOnce()).createScaledBitmap(mockBitmap, 3, 2, true);
+    }
+
+    @Test
     public void drawFirstBrickWithDownScaledColor() throws Exception {
         Bitmap mockBitmap = createMockBitmap(BRICK_SIZE, BRICK_SIZE);
 
         new Legofy(new TestBitmapWrapper(), mockDrawer, 1).processBitmap(null, mockBitmap);
 
         verify(mockDrawer).drawBrick(eq(TestBitmapWrapper.FIRST_COLOR), eq(0), eq(0));
-
     }
 
     @Test
@@ -140,7 +153,6 @@ public class LegofyTest {
         new Legofy(new TestBitmapWrapper(), mockDrawer, 2).processBitmap(null, mockBitmap);
 
         verify(mockDrawer).drawBrick(eq(TestBitmapWrapper.SECOND_HORIZONTAL_COLOR), eq(BRICK_SIZE), eq(0));
-
     }
 
     private Bitmap createMockBitmap(int width, int height) {
@@ -148,5 +160,12 @@ public class LegofyTest {
         doReturn(width).when(mockBitmap).getWidth();
         doReturn(height).when(mockBitmap).getHeight();
         return mockBitmap;
+    }
+
+    private BitmapWrapper createMockBitmapWrapper(Bitmap returnBitmap) {
+        BitmapWrapper mockWrapper = mock(BitmapWrapper.class);
+        doReturn(returnBitmap).when(mockWrapper).createBitmap(anyInt(), anyInt(), any(Bitmap.Config.class));
+        doReturn(returnBitmap).when(mockWrapper).createScaledBitmap(any(Bitmap.class), anyInt(), anyInt(), anyBoolean());
+        return mockWrapper;
     }
 }
