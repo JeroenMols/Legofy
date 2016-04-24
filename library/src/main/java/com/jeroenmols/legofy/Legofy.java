@@ -9,9 +9,21 @@ import android.graphics.Bitmap;
  */
 public class Legofy {
 
-    private final int bricksInWidth;
+    private int bricksInWidth;
     private BrickDrawer brickDrawer;
     private final BitmapWrapper bitmapWrapper;
+
+    public static Legofy with(Context context) {
+        if (context == null) {
+            throw new RuntimeException("Context must not be null");
+        }
+        return new Legofy(context.getApplicationContext());
+    }
+
+    public Legofy amountOfBricks(int minimumBricks) {
+        bricksInWidth = minimumBricks;
+        return this;
+    }
 
     public Legofy(int bricksInWidth) {
         this(new BitmapWrapper(), new BrickDrawer(), bricksInWidth);
@@ -49,12 +61,5 @@ public class Legofy {
         int width = brickSize * bricksInWidth;
         int height = (bitmap.getHeight() / brickSize) * brickSize;
         return bitmapWrapper.createBitmap(width, height, Bitmap.Config.ARGB_4444);
-    }
-
-    public static Legofy with(Context context) {
-        if (context == null) {
-            throw new RuntimeException("Context must not be null");
-        }
-        return new Legofy(context.getApplicationContext());
     }
 }

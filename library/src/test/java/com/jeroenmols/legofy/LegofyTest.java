@@ -61,6 +61,15 @@ public class LegofyTest {
     }
 
     @Test
+    public void setNumberOfBricks() throws Exception {
+        Legofy legofy = Legofy.with(mock(Context.class));
+
+        Legofy returnLegofy = legofy.amountOfBricks(10);
+
+        assertThat(returnLegofy).isSameAs(legofy);
+    }
+
+    @Test
     public void createWithNumberOfWidthBricks() throws Exception {
         new Legofy(10);
     }
