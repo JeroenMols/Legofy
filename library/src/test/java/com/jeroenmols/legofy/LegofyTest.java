@@ -111,7 +111,7 @@ public class LegofyTest {
     public void processedBitmapIsArgb4444() throws Exception {
         Bitmap mockBitmap = createMockBitmap(3 * BRICK_SIZE, 2 * BRICK_SIZE);
 
-        Bitmap processedBitmap = new Legofy(mockContext, new TestBitmapWrapper(), mockDrawer).amountOfBricks(3).processBitmap(mockBitmap);
+        Bitmap processedBitmap = legofy.amountOfBricks(3).processBitmap(mockBitmap);
 
         assertThat(processedBitmap.getConfig()).isEqualTo(Bitmap.Config.ARGB_4444);
     }
@@ -122,7 +122,7 @@ public class LegofyTest {
         doReturn(mockResources).when(mockContext).getResources();
         Bitmap mockBitmap = createMockBitmap(BRICK_SIZE, BRICK_SIZE);
 
-        new Legofy(mockContext, new TestBitmapWrapper(), mockDrawer).processBitmap(mockBitmap);
+        legofy.processBitmap(mockBitmap);
 
         verify(mockDrawer).setBitmap(eq(mockResources), any(Bitmap.class), anyInt());
     }
@@ -149,7 +149,7 @@ public class LegofyTest {
     public void drawFirstBrick() throws Exception {
         Bitmap mockBitmap = createMockBitmap(BRICK_SIZE, BRICK_SIZE);
 
-        new Legofy(mockContext, new TestBitmapWrapper(), mockDrawer).amountOfBricks(1).processBitmap(mockBitmap);
+        legofy.amountOfBricks(1).processBitmap(mockBitmap);
 
         verify(mockDrawer).drawBrick(anyInt(), eq(0), eq(0));
     }
@@ -158,7 +158,7 @@ public class LegofyTest {
     public void drawSecondHorizontalBrick() throws Exception {
         Bitmap mockBitmap = createMockBitmap(2 * BRICK_SIZE, BRICK_SIZE);
 
-        new Legofy(mockContext, new TestBitmapWrapper(), mockDrawer).amountOfBricks(2).processBitmap(mockBitmap);
+        legofy.amountOfBricks(2).processBitmap(mockBitmap);
 
         verify(mockDrawer).drawBrick(anyInt(), eq(BRICK_SIZE), eq(0));
     }
@@ -167,7 +167,7 @@ public class LegofyTest {
     public void drawSecondVerticalBrick() throws Exception {
         Bitmap mockBitmap = createMockBitmap(BRICK_SIZE, 2 * BRICK_SIZE);
 
-        new Legofy(mockContext, new TestBitmapWrapper(), mockDrawer).amountOfBricks(1).processBitmap(mockBitmap);
+        legofy.amountOfBricks(1).processBitmap(mockBitmap);
 
         verify(mockDrawer).drawBrick(anyInt(), eq(0), eq(BRICK_SIZE));
     }
@@ -186,7 +186,7 @@ public class LegofyTest {
     public void drawFirstBrickWithDownScaledColor() throws Exception {
         Bitmap mockBitmap = createMockBitmap(BRICK_SIZE, BRICK_SIZE);
 
-        new Legofy(mockContext, new TestBitmapWrapper(), mockDrawer).amountOfBricks(1).processBitmap(mockBitmap);
+        legofy.amountOfBricks(1).processBitmap(mockBitmap);
 
         verify(mockDrawer).drawBrick(eq(TestBitmapWrapper.FIRST_COLOR), eq(0), eq(0));
     }
@@ -195,7 +195,7 @@ public class LegofyTest {
     public void drawSecondBrickWithDownScaledColor() throws Exception {
         Bitmap mockBitmap = createMockBitmap(2 * BRICK_SIZE, BRICK_SIZE);
 
-        new Legofy(mockContext, new TestBitmapWrapper(), mockDrawer).amountOfBricks(2).processBitmap(mockBitmap);
+        legofy.amountOfBricks(2).processBitmap(mockBitmap);
 
         verify(mockDrawer).drawBrick(eq(TestBitmapWrapper.SECOND_HORIZONTAL_COLOR), eq(BRICK_SIZE), eq(0));
     }
