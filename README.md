@@ -20,7 +20,7 @@ See the application in action:
 Refactor this experiment into two easy to use libraries
 
 * Drawable/ImageView with a dissolve effect
-* Library that applies a Lego effect to an existing bitmap
+* Library that applies a Lego effect to an existing bitmap (ongoing)
 
 ## Questions
 @molsjeroen
