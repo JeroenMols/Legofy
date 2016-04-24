@@ -1,4 +1,4 @@
-# Legofy
+# Legofy [![Build Status](https://travis-ci.org/JeroenMols/Legofy.svg?branch=develop)](https://travis-ci.org/JeroenMols/Legofy)
 Android experiment for fun and possible go to Google IO!
 
 <a href='https://play.google.com/store/apps/details?id=com.jeroenmols.brickeffect&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-ap-PartBadge-Mar2515-1'>
