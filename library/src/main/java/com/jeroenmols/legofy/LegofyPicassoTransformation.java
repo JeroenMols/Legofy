@@ -10,6 +10,7 @@ import com.squareup.picasso.Transformation;
  */
 public class LegofyPicassoTransformation implements Transformation {
 
+    public static final String LEGOFY = "legofy";
     private final Context applicationContext;
 
     public LegofyPicassoTransformation(Context context) {
@@ -25,6 +26,6 @@ public class LegofyPicassoTransformation implements Transformation {
 
     @Override
     public String key() {
-        return null;
+        return LEGOFY;
     }
 }

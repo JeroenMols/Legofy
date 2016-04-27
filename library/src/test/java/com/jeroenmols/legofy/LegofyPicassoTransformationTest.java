@@ -50,4 +50,11 @@ public class LegofyPicassoTransformationTest {
 
         legofyPicassoTransformation.transform(mockBitmap);
     }
+
+    @Test
+    public void shouldReturnKey() throws Exception {
+        String key = legofyPicassoTransformation.key();
+
+        assertThat(key).isEqualTo(LegofyPicassoTransformation.LEGOFY);
+    }
 }
