@@ -11,7 +11,7 @@ import com.squareup.picasso.Transformation;
 public class LegofyPicassoTransformation implements Transformation {
 
     public LegofyPicassoTransformation(Context context) {
-
+        context.getApplicationContext();
     }
 
     @Override
