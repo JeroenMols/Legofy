@@ -83,11 +83,6 @@ public class Legofy {
         float downScaleFactor = getDownScaleFactorToLimitOutputSize(bitmap);
         return (int) (downScaleFactor * upscaleFactor * bitmap.getHeight() / actualBrickSize);
     }
-
-    private int getAmountOfBricks(int brickSize, Bitmap processedBitmap) {
-        return processedBitmap.getWidth() * processedBitmap.getHeight() / brickSize / brickSize;
-    }
-
     private float getUpScaleFactorToFitRequestedBricks(Bitmap bitmap) {
         float scaleToFitAllBricks = ((float) MINIMUM_BRICKSIZE) / getRequestedBrickSize(bitmap);
         float maxScaleX = ((float) DEFAULT_MAXOUTPUTSIZE) / bitmap.getWidth();
