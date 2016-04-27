@@ -1,5 +1,5 @@
-# Legofy [![Build Status](https://travis-ci.org/JeroenMols/Legofy.svg?branch=develop)](https://travis-ci.org/JeroenMols/Legofy)
-Android experiment for fun and possible go to Google IO!
+# Legofy [![Build Status](https://travis-ci.org/JeroenMols/Legofy.svg?branch=develop)](https://travis-ci.org/JeroenMols/Legofy) [![codecov](https://codecov.io/gh/JeroenMols/Legofy/branch/develop/graph/badge.svg)](https://codecov.io/gh/JeroenMols/Legofy)
+Android library to Legofy existing images.
 
 <a href='https://play.google.com/store/apps/details?id=com.jeroenmols.brickeffect&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-ap-PartBadge-Mar2515-1'>
   <img alt='Get it on Google Play' width="200"
@@ -12,7 +12,12 @@ See the application in action:
   <img src="https://github.com/JeroenMols/Legofy/blob/master/play-store/preview.gif" alt="Legofy in action" height="550"/>
 </p>
 
-## Features
+## Library features
+* Convert any Bitmap into a legofied version
+* Upscale low resolution bitmaps to 1080px
+* Limit output size to 1080px to avoid out of memory exceptions
+
+## App features
 * Dissolve effect during image drawing
 * Legofy effect on an image
 
@@ -20,7 +25,7 @@ See the application in action:
 Refactor this experiment into two easy to use libraries
 
 * Drawable/ImageView with a dissolve effect
-* Library that applies a Lego effect to an existing bitmap (ongoing)
+* Library that applies a Lego effect to an existing bitmap (first draft done)
 
 ## Questions
 @molsjeroen
