@@ -242,12 +242,21 @@ public class LegofyTest {
     }
 
     @Test
-    public void useLessBricksIfTooManyBricks() throws Exception {
+    public void limitAmountOfBricksIfTooManyRequested() throws Exception {
         Bitmap mockBitmap = createMockBitmap(1080, 1080);
 
         new Legofy(mockContext, new TestBitmapWrapper(), mockDrawer).amountOfBricks(1080).convert(mockBitmap);
 
         verify(mockDrawer, times(2916)).drawBrick(anyInt(), anyInt(), anyInt());
+    }
+
+    @Test
+    public void dontUpscaleWidthIfNoRoomForHeight() throws Exception {
+        Bitmap mockBitmap = createMockBitmap(100, 1080);
+
+        Bitmap processedBitmap = legofy.amountOfBricks(1080).convert(mockBitmap);
+
+        assertThat(processedBitmap.getWidth()).isEqualTo(100);
     }
 
     private Bitmap createMockBitmap(int width, int height) {

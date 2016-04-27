@@ -88,7 +88,9 @@ public class Legofy {
 
     // Upscaling needed to make bricks fit on image
     private float getUpScaleFactor(Bitmap bitmap) {
-        float scale = ((float) MINIMUM_BRICKSIZE) / getRequestedBrickSize(bitmap);
+        float scaleToFitAllBricks = ((float) MINIMUM_BRICKSIZE) / getRequestedBrickSize(bitmap);
+        float maxScaleY = DEFAULT_MAXOUTPUTSIZE / bitmap.getHeight();
+        float scale = Math.min(scaleToFitAllBricks, maxScaleY);
         return Math.max(DEFAULT_SCALE, scale);
     }
 
