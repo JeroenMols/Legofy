@@ -1,6 +1,7 @@
 package com.jeroenmols.legofy;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.test.suitebuilder.annotation.SmallTest;
 
 import org.junit.Before;
@@ -9,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 /**
@@ -19,10 +21,12 @@ public class LegofyPicassoTransformationTest {
 
     @Mock
     private Context mockContext;
+    private LegofyPicassoTransformation legofyPicassoTransformation;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
+        legofyPicassoTransformation = new LegofyPicassoTransformation(mockContext);
     }
 
     @Test
@@ -32,15 +36,20 @@ public class LegofyPicassoTransformationTest {
 
     @Test
     public void shouldBePicassoTransformation() throws Exception {
-        LegofyPicassoTransformation legofyPicassoTransformation = new LegofyPicassoTransformation(mockContext);
-
         assertThat(legofyPicassoTransformation).isInstanceOf(com.squareup.picasso.Transformation.class);
     }
 
     @Test
     public void shouldTakeApplicationContext() throws Exception {
-        new LegofyPicassoTransformation(mockContext);
-
         verify(mockContext).getApplicationContext();
+    }
+
+    @Test
+    public void shouldRecycleBitmap() throws Exception {
+        Bitmap mockBitmap = mock(Bitmap.class);
+
+        legofyPicassoTransformation.transform(mockBitmap);
+
+        verify(mockBitmap).recycle();
     }
 }

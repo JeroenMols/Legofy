@@ -16,6 +16,8 @@ public class LegofyPicassoTransformation implements Transformation {
 
     @Override
     public Bitmap transform(Bitmap source) {
+
+        source.recycle();
         return null;
     }
 
