@@ -41,25 +41,18 @@ public class Legofy {
     }
 
     public Bitmap convert(Bitmap bitmap) {
-        float scaleFactor = getScaleFactor(bitmap);
-        int brickSize = (int) (bitmap.getWidth() * scaleFactor) / bricksInWidth;
-
+        int brickSize = getBrickSize(bitmap);
         Bitmap outputBitmap = createBitmapForBrickSize(bitmap, brickSize);
+
         brickDrawer.setBitmap(context.getResources(), outputBitmap, brickSize);
         drawAllBricks(bitmap, brickSize, outputBitmap);
 
         return outputBitmap;
     }
 
-    private void drawAllBricks(Bitmap outputBitmap, int brickSize, Bitmap processedBitmap) {
-        int amountOfBricks = getAmountOfBricks(brickSize, processedBitmap);
-        Bitmap scaledBitmap = bitmapWrapper.createScaledBitmap(outputBitmap, bricksInWidth, amountOfBricks / bricksInWidth, true);
-        for (int i = 0; i < amountOfBricks; i++) {
-            int posX = i % bricksInWidth;
-            int posY = i / bricksInWidth;
-            int color = scaledBitmap.getPixel(posX, posY);
-            brickDrawer.drawBrick(color, posX * brickSize, posY * brickSize);
-        }
+    private int getBrickSize(Bitmap bitmap) {
+        float scaleFactor = getScaleFactor(bitmap);
+        return (int) (bitmap.getWidth() * scaleFactor) / bricksInWidth;
     }
 
     private int getAmountOfBricks(int brickSize, Bitmap processedBitmap) {
@@ -77,5 +70,16 @@ public class Legofy {
         int width = brickSize * bricksInWidth;
         int height = ((int) (bitmap.getHeight() * getScaleFactor(bitmap)) / brickSize) * brickSize;
         return bitmapWrapper.createBitmap(width, height, Bitmap.Config.ARGB_4444);
+    }
+
+    private void drawAllBricks(Bitmap outputBitmap, int brickSize, Bitmap processedBitmap) {
+        int amountOfBricks = getAmountOfBricks(brickSize, processedBitmap);
+        Bitmap scaledBitmap = bitmapWrapper.createScaledBitmap(outputBitmap, bricksInWidth, amountOfBricks / bricksInWidth, true);
+        for (int i = 0; i < amountOfBricks; i++) {
+            int posX = i % bricksInWidth;
+            int posY = i / bricksInWidth;
+            int color = scaledBitmap.getPixel(posX, posY);
+            brickDrawer.drawBrick(color, posX * brickSize, posY * brickSize);
+        }
     }
 }
