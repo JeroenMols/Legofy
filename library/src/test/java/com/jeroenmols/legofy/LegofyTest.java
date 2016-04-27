@@ -259,6 +259,15 @@ public class LegofyTest {
         assertThat(processedBitmap.getWidth()).isEqualTo(100);
     }
 
+    @Test
+    public void dontUpscaleWidthIfNoRoomForWidth() throws Exception {
+        Bitmap mockBitmap = createMockBitmap(100, 50);
+
+        Bitmap processedBitmap = legofy.amountOfBricks(1080).convert(mockBitmap);
+
+        assertThat(processedBitmap.getWidth()).isEqualTo(1080);
+    }
+
     private Bitmap createMockBitmap(int width, int height) {
         Bitmap mockBitmap = mock(Bitmap.class);
         doReturn(width).when(mockBitmap).getWidth();
