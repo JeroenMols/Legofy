@@ -26,6 +26,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
+    provided 'com.squareup.picasso:picasso:2.5.2'
+
     testCompile 'junit:junit:4.12'
     testCompile "org.mockito:mockito-core:2.0.0-beta"
     testCompile 'org.assertj:assertj-core:1.7.1'
