@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.jeroenmols.legofy.Legofy;
+import com.jeroenmols.legofy.LegofyPicassoTransformation;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -97,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
             Uri fullPhotoUri = data.getData();
             thumbnail.setImageURI(fullPhotoUri);
 
-            setImageBitmap(loadScaledBitmap(fullPhotoUri));
+            Picasso.with(this).load(fullPhotoUri).transform(new LegofyPicassoTransformation(this)).into(image);
         }
     }
 
