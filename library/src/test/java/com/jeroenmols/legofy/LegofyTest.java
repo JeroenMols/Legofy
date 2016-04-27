@@ -230,6 +230,17 @@ public class LegofyTest {
         assertThat(processedBitmap.getHeight()).isEqualTo(1080);
     }
 
+    @Test
+    public void upscaleImageIfTooSmall() throws Exception {
+        Bitmap mockBitmap = createMockBitmap(10, 10);
+
+        Bitmap processedBitmap = legofy.amountOfBricks(BRICKS_INWIDTH).convert(mockBitmap);
+
+        assertThat(processedBitmap.getWidth()).isEqualTo(200);
+        assertThat(processedBitmap.getHeight()).isEqualTo(200);
+
+    }
+
     private Bitmap createMockBitmap(int width, int height) {
         Bitmap mockBitmap = mock(Bitmap.class);
         doReturn(width).when(mockBitmap).getWidth();

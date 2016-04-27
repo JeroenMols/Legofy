@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
  */
 public class Legofy {
 
+    public static final int MINIMUM_BRICKSIZE = 20;
     public static final int DEFAULT_AMOUNTOFBRICKS = 20;
     public static final int DEFAULT_MAXOUTPUTSIZE = 1080;
     public static final int DEFAULT_SCALE = 1;
@@ -41,13 +42,33 @@ public class Legofy {
     }
 
     public Bitmap convert(Bitmap bitmap) {
-        int brickSize = getBrickSize(bitmap);
-        Bitmap outputBitmap = createBitmapForBrickSize(bitmap, brickSize);
+        Bitmap outputBitmap = createOutputBitmap(bitmap);
+        int brickSize = Math.max(getBrickSize(bitmap), MINIMUM_BRICKSIZE);
 
         brickDrawer.setBitmap(context.getResources(), outputBitmap, brickSize);
         drawAllBricks(bitmap, brickSize, outputBitmap);
 
         return outputBitmap;
+    }
+
+    private Bitmap createOutputBitmap(Bitmap bitmap) {
+        int brickSize = getBrickSize(bitmap);
+        int width = getOutputWidth(brickSize);
+        int height = getOutputHeight(bitmap, brickSize);
+        return bitmapWrapper.createBitmap(width, height, Bitmap.Config.ARGB_4444);
+    }
+
+    private int getOutputWidth(int brickSize) {
+        return Math.max(MINIMUM_BRICKSIZE, brickSize) * bricksInWidth;
+    }
+
+    private int getOutputHeight(Bitmap bitmap, int brickSize) {
+        if (brickSize >= MINIMUM_BRICKSIZE) {
+            return ((int) (bitmap.getHeight() * getScaleFactor(bitmap)) / brickSize) * brickSize;
+        } else {
+            float upscaleFactor = ((float) MINIMUM_BRICKSIZE) / brickSize;
+            return ((int) (bitmap.getHeight() * upscaleFactor) / MINIMUM_BRICKSIZE) * MINIMUM_BRICKSIZE;
+        }
     }
 
     private int getBrickSize(Bitmap bitmap) {
@@ -64,12 +85,6 @@ public class Legofy {
         float scaleY = ((float) DEFAULT_MAXOUTPUTSIZE) / bitmap.getHeight();
         float scale = Math.min(scaleX, scaleY);
         return Math.min(scale, DEFAULT_SCALE);
-    }
-
-    private Bitmap createBitmapForBrickSize(Bitmap bitmap, int brickSize) {
-        int width = brickSize * bricksInWidth;
-        int height = ((int) (bitmap.getHeight() * getScaleFactor(bitmap)) / brickSize) * brickSize;
-        return bitmapWrapper.createBitmap(width, height, Bitmap.Config.ARGB_4444);
     }
 
     private void drawAllBricks(Bitmap outputBitmap, int brickSize, Bitmap processedBitmap) {
