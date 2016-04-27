@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.jeroenmols.legofy.Legofy;
+
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
@@ -77,9 +79,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setImageBitmap(Bitmap bitmap) {
-        EffectDrawable customDrawable = new EffectDrawable(bitmap);
-        this.image.setImageDrawable(customDrawable);
-        customDrawable.applyEffect(new LegofyEffect(getResources(), AMOUNT_OF_BRICKS_IN_WIDTH, ANIM_DURATION_MS));
+        Bitmap convert = Legofy.with(this).amountOfBricks(40).convert(bitmap);
+        this.image.setImageBitmap(convert);
     }
 
     public void selectImage() {
