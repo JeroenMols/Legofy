@@ -270,7 +270,7 @@ public class LegofyTest {
     }
 
     @Test
-    public void limitAmountOfBricksAfterUpScaling() throws Exception {
+    public void useCorrectDimensionsAfterScaling() throws Exception {
         Bitmap mockBitmap = createMockBitmap(159, 183);
 
         legofy.amountOfBricks(40).convert(mockBitmap);
