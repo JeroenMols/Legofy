@@ -42,8 +42,8 @@ public class Legofy {
     }
 
     public Bitmap convert(Bitmap bitmap) {
-        Bitmap outputBitmap = createOutputBitmap(bitmap);
-        int brickSize = Math.max(getBrickSize(bitmap), MINIMUM_BRICKSIZE);
+        int brickSize = getActualBrickSize(bitmap);
+        Bitmap outputBitmap = createOutputBitmap(bitmap, brickSize);
 
         brickDrawer.setBitmap(context.getResources(), outputBitmap, brickSize);
         drawAllBricks(bitmap, outputBitmap, brickSize);
@@ -51,27 +51,9 @@ public class Legofy {
         return outputBitmap;
     }
 
-    private Bitmap createOutputBitmap(Bitmap bitmap) {
-        int brickSize = getBrickSize(bitmap);
-        int actualBrickSize = Math.max(brickSize, MINIMUM_BRICKSIZE);
-
-        int bricksInWidth;
-        if (brickSize < MINIMUM_BRICKSIZE) {
-            float upscaleFactor = ((float) MINIMUM_BRICKSIZE) / brickSize;
-            bricksInWidth = (int) (upscaleFactor * bitmap.getWidth() / actualBrickSize);
-        } else {
-            float downScaleFactor = getDownScaleFactor(bitmap);
-            bricksInWidth = (int) (downScaleFactor * bitmap.getWidth() / actualBrickSize);
-        }
-
-        int bricksInHeight;
-        if (brickSize < MINIMUM_BRICKSIZE) {
-            float upscaleFactor = ((float) MINIMUM_BRICKSIZE) / brickSize;
-            bricksInHeight = (int) (upscaleFactor * bitmap.getHeight() / actualBrickSize);
-        } else {
-            float downScaleFactor = getDownScaleFactor(bitmap);
-            bricksInHeight = (int) (downScaleFactor * bitmap.getHeight() / actualBrickSize);
-        }
+    private Bitmap createOutputBitmap(Bitmap bitmap, int actualBrickSize) {
+        int bricksInWidth = getBricksInWidth(bitmap, actualBrickSize);
+        int bricksInHeight = getBricksInHeight(bitmap, actualBrickSize);
 
         int width = bricksInWidth * actualBrickSize;
         int height = bricksInHeight * actualBrickSize;
@@ -79,13 +61,34 @@ public class Legofy {
         return bitmapWrapper.createBitmap(width, height, Bitmap.Config.ARGB_4444);
     }
 
-    private int getBrickSize(Bitmap bitmap) {
+    private int getActualBrickSize(Bitmap bitmap) {
+        return Math.max(getRequestedBrickSize(bitmap), MINIMUM_BRICKSIZE);
+    }
+
+    private int getBricksInWidth(Bitmap bitmap, int actualBrickSize) {
+        float upscaleFactor = getUpScaleFactor(bitmap);
+        float downScaleFactor = getDownScaleFactor(bitmap);
+        return (int) (downScaleFactor * upscaleFactor * bitmap.getWidth() / actualBrickSize);
+    }
+
+    private int getBricksInHeight(Bitmap bitmap, int actualBrickSize) {
+        float upscaleFactor = getUpScaleFactor(bitmap);
+        float downScaleFactor = getDownScaleFactor(bitmap);
+        return (int) (downScaleFactor * upscaleFactor * bitmap.getHeight() / actualBrickSize);
+    }
+
+    private int getRequestedBrickSize(Bitmap bitmap) {
         float scaleFactor = getDownScaleFactor(bitmap);
         return (int) (bitmap.getWidth() * scaleFactor) / getBricksInWidth();
     }
 
     private int getAmountOfBricks(int brickSize, Bitmap processedBitmap) {
         return processedBitmap.getWidth() * processedBitmap.getHeight() / brickSize / brickSize;
+    }
+
+    private float getUpScaleFactor(Bitmap bitmap) {
+        float scale = ((float) MINIMUM_BRICKSIZE) / getRequestedBrickSize(bitmap);
+        return Math.max(DEFAULT_SCALE, scale);
     }
 
     private float getDownScaleFactor(Bitmap bitmap) {
