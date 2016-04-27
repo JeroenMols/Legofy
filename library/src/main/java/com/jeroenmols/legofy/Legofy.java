@@ -1,7 +1,6 @@
 package com.jeroenmols.legofy;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 
 /**
@@ -10,6 +9,7 @@ import android.graphics.Bitmap;
 public class Legofy {
 
     public static final int DEFAULT_AMOUNTOFBRICKS = 20;
+    public static final int DEFAULT_MAXOUTPUTSIZE = 1080;
 
     private Context context;
     private BrickDrawer brickDrawer;
@@ -40,7 +40,8 @@ public class Legofy {
     }
 
     public Bitmap convert(Bitmap bitmap) {
-        int brickSize = bitmap.getWidth() / bricksInWidth;
+        float scaleFactor = createScaleFactor(bitmap);
+        int brickSize = (int) (bitmap.getWidth() * scaleFactor) / bricksInWidth;
 
         Bitmap processedBitmap = createBitmapForBrickSize(bitmap, brickSize);
         brickDrawer.setBitmap(context.getResources(), processedBitmap, brickSize);
@@ -59,7 +60,15 @@ public class Legofy {
 
     private Bitmap createBitmapForBrickSize(Bitmap bitmap, int brickSize) {
         int width = brickSize * bricksInWidth;
-        int height = (bitmap.getHeight() / brickSize) * brickSize;
+        int height = ((int) (bitmap.getHeight() * createScaleFactor(bitmap)) / brickSize) * brickSize;
         return bitmapWrapper.createBitmap(width, height, Bitmap.Config.ARGB_4444);
+    }
+
+    private float createScaleFactor(Bitmap bitmap) {
+        float scaleFactor = 1;
+        if (bitmap.getWidth() > DEFAULT_MAXOUTPUTSIZE) {
+            scaleFactor = ((float) DEFAULT_MAXOUTPUTSIZE) / bitmap.getWidth();
+        }
+        return scaleFactor;
     }
 }
