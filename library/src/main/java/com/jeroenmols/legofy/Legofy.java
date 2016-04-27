@@ -86,11 +86,13 @@ public class Legofy {
         return processedBitmap.getWidth() * processedBitmap.getHeight() / brickSize / brickSize;
     }
 
+    // Upscaling needed to make bricks fit on image
     private float getUpScaleFactor(Bitmap bitmap) {
         float scale = ((float) MINIMUM_BRICKSIZE) / getRequestedBrickSize(bitmap);
         return Math.max(DEFAULT_SCALE, scale);
     }
 
+    // Downscaling needed to avoid out of memory exceptions
     private float getDownScaleFactor(Bitmap bitmap) {
         float scaleX = ((float) DEFAULT_MAXOUTPUTSIZE) / bitmap.getWidth();
         float scaleY = ((float) DEFAULT_MAXOUTPUTSIZE) / bitmap.getHeight();
