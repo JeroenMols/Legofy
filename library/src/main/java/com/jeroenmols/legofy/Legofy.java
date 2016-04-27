@@ -10,6 +10,7 @@ public class Legofy {
 
     public static final int DEFAULT_AMOUNTOFBRICKS = 20;
     public static final int DEFAULT_MAXOUTPUTSIZE = 1080;
+    public static final int DEFAULT_SCALE = 1;
 
     private Context context;
     private BrickDrawer brickDrawer;
@@ -65,11 +66,9 @@ public class Legofy {
     }
 
     private float createScaleFactor(Bitmap bitmap) {
-        if (bitmap.getWidth() > DEFAULT_MAXOUTPUTSIZE) {
-            return ((float) DEFAULT_MAXOUTPUTSIZE) / bitmap.getWidth();
-        } else if (bitmap.getHeight() > DEFAULT_MAXOUTPUTSIZE) {
-            return ((float) DEFAULT_MAXOUTPUTSIZE) / bitmap.getHeight();
-        }
-        return 1;
+        float scaleX = ((float) DEFAULT_MAXOUTPUTSIZE) / bitmap.getWidth();
+        float scaleY = ((float) DEFAULT_MAXOUTPUTSIZE) / bitmap.getHeight();
+        float scale = Math.min(scaleX, scaleY);
+        return Math.min(scale, DEFAULT_SCALE);
     }
 }

@@ -220,6 +220,16 @@ public class LegofyTest {
         assertThat(processedBitmap.getHeight()).isEqualTo(1080);
     }
 
+    @Test
+    public void outputHeightBitmapMax1080p_2() throws Exception {
+        Bitmap mockBitmap = createMockBitmap(2000, 3000);
+
+        Bitmap processedBitmap = legofy.amountOfBricks(BRICKS_INWIDTH).convert(mockBitmap);
+
+        assertThat(processedBitmap.getWidth()).isEqualTo(720);
+        assertThat(processedBitmap.getHeight()).isEqualTo(1080);
+    }
+
     private Bitmap createMockBitmap(int width, int height) {
         Bitmap mockBitmap = mock(Bitmap.class);
         doReturn(width).when(mockBitmap).getWidth();
