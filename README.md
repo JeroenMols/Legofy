@@ -43,7 +43,7 @@ See the application in action:
 * Library that applies a Lego effect to an existing bitmap (first draft done)
 
 ## Questions
-@molsjeroen
+[@molsjeroen](https://twitter.com/molsjeroen)
 
 ## Credits
 - [Mona Lisa](http://www.wikiart.org/en/leonardo-da-vinci/mona-lisa?utm_source=returned&utm_medium=referral&utm_campaign=referral) - Leonard Da Vinchi
