@@ -10,15 +10,17 @@ import com.squareup.picasso.Transformation;
  */
 public class LegofyPicassoTransformation implements Transformation {
 
+    private final Context applicationContext;
+
     public LegofyPicassoTransformation(Context context) {
-        context.getApplicationContext();
+        applicationContext = context.getApplicationContext();
     }
 
     @Override
     public Bitmap transform(Bitmap source) {
-
+        Bitmap legofiedBitmap = Legofy.with(applicationContext).convert(source);
         source.recycle();
-        return null;
+        return legofiedBitmap;
     }
 
     @Override

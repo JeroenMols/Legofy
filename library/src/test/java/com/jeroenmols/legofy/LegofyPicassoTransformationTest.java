@@ -44,12 +44,10 @@ public class LegofyPicassoTransformationTest {
         verify(mockContext).getApplicationContext();
     }
 
-    @Test
-    public void shouldRecycleBitmap() throws Exception {
+    @Test(expected = RuntimeException.class)
+    public void shouldLegofyBitmap() throws Exception {
         Bitmap mockBitmap = mock(Bitmap.class);
 
         legofyPicassoTransformation.transform(mockBitmap);
-
-        verify(mockBitmap).recycle();
     }
 }
