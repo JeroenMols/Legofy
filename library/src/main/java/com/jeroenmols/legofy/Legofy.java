@@ -65,10 +65,11 @@ public class Legofy {
     }
 
     private float createScaleFactor(Bitmap bitmap) {
-        float scaleFactor = 1;
         if (bitmap.getWidth() > DEFAULT_MAXOUTPUTSIZE) {
-            scaleFactor = ((float) DEFAULT_MAXOUTPUTSIZE) / bitmap.getWidth();
+            return ((float) DEFAULT_MAXOUTPUTSIZE) / bitmap.getWidth();
+        } else if (bitmap.getHeight() > DEFAULT_MAXOUTPUTSIZE) {
+            return ((float) DEFAULT_MAXOUTPUTSIZE) / bitmap.getHeight();
         }
-        return scaleFactor;
+        return 1;
     }
 }
