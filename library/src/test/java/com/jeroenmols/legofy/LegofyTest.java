@@ -15,6 +15,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -266,6 +267,15 @@ public class LegofyTest {
         Bitmap processedBitmap = legofy.amountOfBricks(1080).convert(mockBitmap);
 
         assertThat(processedBitmap.getWidth()).isEqualTo(1080);
+    }
+
+    @Test
+    public void limitAmountOfBricksAfterUpScaling() throws Exception {
+        Bitmap mockBitmap = createMockBitmap(159, 183);
+
+        legofy.amountOfBricks(40).convert(mockBitmap);
+
+        verify(mockDrawer, atLeastOnce()).drawBrick(anyInt(), eq(45 * 20), anyInt());
     }
 
     private Bitmap createMockBitmap(int width, int height) {

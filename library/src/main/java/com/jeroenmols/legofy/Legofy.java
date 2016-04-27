@@ -43,18 +43,20 @@ public class Legofy {
 
     public Bitmap convert(Bitmap bitmap) {
         int brickSize = getActualBrickSize(bitmap);
-        Bitmap outputBitmap = createOutputBitmap(bitmap, brickSize);
+        int bricksInWidth = getBricksInWidth(bitmap, brickSize);
+        int bricksInHeight = getBricksInHeight(bitmap, brickSize);
 
+        return createLegofiedBitmap(bitmap, brickSize, bricksInWidth, bricksInHeight);
+    }
+
+    private Bitmap createLegofiedBitmap(Bitmap bitmap, int brickSize, int bricksInWidth, int bricksInHeight) {
+        Bitmap outputBitmap = createOutputBitmap(bricksInWidth, bricksInHeight, brickSize);
         brickDrawer.setBitmap(context.getResources(), outputBitmap, brickSize);
-        drawAllBricks(bitmap, outputBitmap, brickSize);
-
+        drawAllBricks(bitmap, bricksInWidth, bricksInHeight, brickSize);
         return outputBitmap;
     }
 
-    private Bitmap createOutputBitmap(Bitmap bitmap, int actualBrickSize) {
-        int bricksInWidth = getBricksInWidth(bitmap, actualBrickSize);
-        int bricksInHeight = getBricksInHeight(bitmap, actualBrickSize);
-
+    private Bitmap createOutputBitmap(int bricksInWidth, int bricksInHeight, int actualBrickSize) {
         int width = bricksInWidth * actualBrickSize;
         int height = bricksInHeight * actualBrickSize;
 
@@ -106,10 +108,9 @@ public class Legofy {
         return Math.min(requestedBricksInWidth, maxBricks);
     }
 
-    private void drawAllBricks(Bitmap inputBitmap, Bitmap outputBitmap, int brickSize) {
-        int bricksInWidth = getBricksInWidth();
-        int amountOfBricks = getAmountOfBricks(brickSize, outputBitmap);
-        Bitmap scaledBitmap = bitmapWrapper.createScaledBitmap(inputBitmap, bricksInWidth, amountOfBricks / bricksInWidth, true);
+    private void drawAllBricks(Bitmap inputBitmap, int bricksInWidth, int bricksInHeight, int brickSize) {
+        int amountOfBricks = bricksInWidth * bricksInHeight;
+        Bitmap scaledBitmap = bitmapWrapper.createScaledBitmap(inputBitmap, bricksInWidth, bricksInHeight, true);
         for (int i = 0; i < amountOfBricks; i++) {
             int posX = i % bricksInWidth;
             int posY = i / bricksInWidth;
