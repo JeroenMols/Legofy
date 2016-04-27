@@ -1,8 +1,10 @@
 package com.jeroenmols.legofy;
 
+import android.content.Context;
 import android.test.suitebuilder.annotation.SmallTest;
 
 import org.junit.Test;
+import org.mockito.Mock;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,14 +14,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SmallTest
 public class LegofyPicassoTransformationTest {
 
+    @Mock
+    private Context mockContext;
+
     @Test
-    public void canInstantiate() throws Exception {
-        new LegofyPicassoTransformation();
+    public void canInstantiateWithContext() throws Exception {
+        new LegofyPicassoTransformation(mockContext);
     }
 
     @Test
     public void shouldBePicassoTransformation() throws Exception {
-        LegofyPicassoTransformation legofyPicassoTransformation = new LegofyPicassoTransformation();
+        LegofyPicassoTransformation legofyPicassoTransformation = new LegofyPicassoTransformation(mockContext);
 
         assertThat(legofyPicassoTransformation).isInstanceOf(com.squareup.picasso.Transformation.class);
     }
