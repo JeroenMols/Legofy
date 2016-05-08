@@ -13,10 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.jeroenmols.brickeffect.effect.DissolveEffect;
 import com.jeroenmols.brickeffect.effect.EffectDrawable;
-import com.jeroenmols.brickeffect.effect.LegofyEffect;
-import com.jeroenmols.legofy.LegofyPicassoTransformation;
-import com.squareup.picasso.Picasso;
+import com.jeroenmols.legofy.Legofy;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -33,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageView image;
     private ImageView thumbnail;
+    private Bitmap currentBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,11 +82,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setImageBitmap(Bitmap bitmap) {
-        EffectDrawable effectDrawable = new EffectDrawable(getCurrentBitmap(), bitmap);
+        Bitmap legofiedBitmap = Legofy.with(this).amountOfBricks(AMOUNT_OF_BRICKS_IN_WIDTH).convert(bitmap);
+        EffectDrawable effectDrawable = new EffectDrawable(getCurrentBitmap(), legofiedBitmap);
         this.image.setImageDrawable(effectDrawable);
         effectDrawable.applyEffect(new DissolveEffect(getResources(), AMOUNT_OF_BRICKS_IN_WIDTH, ANIM_DURATION_MS));
-//        Bitmap convert = Legofy.with(this).amountOfBricks(40).convert(bitmap);
-//        this.image.setImageBitmap(convert);
     }
 
     public void selectImage() {
@@ -103,7 +102,8 @@ public class MainActivity extends AppCompatActivity {
             Uri fullPhotoUri = data.getData();
             thumbnail.setImageURI(fullPhotoUri);
 
-            Picasso.with(this).load(fullPhotoUri).transform(new LegofyPicassoTransformation(this)).into(image);
+            Bitmap bitmap = loadScaledBitmap(fullPhotoUri);
+            setImageBitmap(bitmap);
         }
     }
 
