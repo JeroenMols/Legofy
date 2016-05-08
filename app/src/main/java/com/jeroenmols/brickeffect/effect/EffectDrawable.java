@@ -1,4 +1,4 @@
-package com.jeroenmols.brickeffect;
+package com.jeroenmols.brickeffect.effect;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

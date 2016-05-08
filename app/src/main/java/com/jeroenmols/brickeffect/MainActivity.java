@@ -13,7 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.jeroenmols.legofy.Legofy;
+import com.jeroenmols.brickeffect.effect.EffectDrawable;
+import com.jeroenmols.brickeffect.effect.LegofyEffect;
 import com.jeroenmols.legofy.LegofyPicassoTransformation;
 import com.squareup.picasso.Picasso;
 

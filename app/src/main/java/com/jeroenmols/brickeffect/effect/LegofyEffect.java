@@ -1,4 +1,4 @@
-package com.jeroenmols.brickeffect;
+package com.jeroenmols.brickeffect.effect;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -7,6 +7,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+
+import com.jeroenmols.brickeffect.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
