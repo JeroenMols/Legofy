@@ -14,8 +14,9 @@ import android.support.annotation.NonNull;
  */
 public class EffectDrawable extends Drawable implements Drawable.Callback {
 
+    private final Bitmap previousBitmap;
     private Paint paint;
-    private Bitmap originalBitmap;
+    private Bitmap nextBitmap;
     private Bitmap resizedBitmap;
     private Effect effect;
 
@@ -27,8 +28,9 @@ public class EffectDrawable extends Drawable implements Drawable.Callback {
         }
     };
 
-    public EffectDrawable(Bitmap bitmap) {
-        originalBitmap = bitmap;
+    public EffectDrawable(Bitmap previousBitmap, Bitmap nextBitmap) {
+        this.previousBitmap = previousBitmap;
+        this.nextBitmap = nextBitmap;
 
         paint = new Paint();
         paint.setAntiAlias(true);
@@ -58,29 +60,32 @@ public class EffectDrawable extends Drawable implements Drawable.Callback {
             effect.initialize(resizedBitmap);
         }
 
-        Rect srcRect = new Rect(0, 0, resizedBitmap.getWidth(), resizedBitmap.getHeight());
-        Rect destRect = createDestinationRectangle(canvas, resizedBitmap);
+        if (previousBitmap != null && !previousBitmap.isRecycled()) {
+            Rect srcRect1 = new Rect(0, 0, previousBitmap.getWidth(), previousBitmap.getHeight());
+            Rect destRect1 = createDestinationRectangle(canvas, previousBitmap);
+            canvas.drawBitmap(previousBitmap, srcRect1, destRect1, paint);
+        }
 
-        canvas.drawBitmap(resizedBitmap, srcRect, destRect, paint);
         if (effect != null) {
             Bitmap bitmap = effect.nextFrame();
-            srcRect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+            Rect destRect = createDestinationRectangle(canvas, resizedBitmap);
+            Rect srcRect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
             canvas.drawBitmap(bitmap, srcRect, destRect, paint);
         }
     }
 
     @NonNull
     private Bitmap resizeOriginalBitmap(int width, int height) {
-        float scaleX = ((float) width) / originalBitmap.getWidth();
-        float scaleY = ((float) height) / originalBitmap.getHeight();
+        float scaleX = ((float) width) / nextBitmap.getWidth();
+        float scaleY = ((float) height) / nextBitmap.getHeight();
         float scale = Math.min(scaleX, scaleY);
 
-        return Bitmap.createScaledBitmap(originalBitmap, (int) (originalBitmap.getWidth() * scale), (int) (originalBitmap.getHeight() * scale), true);
+        return Bitmap.createScaledBitmap(nextBitmap, (int) (nextBitmap.getWidth() * scale), (int) (nextBitmap.getHeight() * scale), true);
     }
 
     private void recycleOriginalBitmap() {
-        originalBitmap.recycle();
-        originalBitmap = null;
+        nextBitmap.recycle();
+        nextBitmap = null;
     }
 
     @NonNull

@@ -82,8 +82,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setImageBitmap(Bitmap bitmap) {
-        Bitmap convert = Legofy.with(this).amountOfBricks(40).convert(bitmap);
-        this.image.setImageBitmap(convert);
+        EffectDrawable effectDrawable = new EffectDrawable(getCurrentBitmap(), bitmap);
+        this.image.setImageDrawable(effectDrawable);
+        effectDrawable.applyEffect(new DissolveEffect(getResources(), AMOUNT_OF_BRICKS_IN_WIDTH, ANIM_DURATION_MS));
+//        Bitmap convert = Legofy.with(this).amountOfBricks(40).convert(bitmap);
+//        this.image.setImageBitmap(convert);
     }
 
     public void selectImage() {
@@ -170,6 +173,13 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return imageFile;
+    }
+
+    public Bitmap getCurrentBitmap() {
+        image.destroyDrawingCache();
+        image.buildDrawingCache();
+        Bitmap cache = image.getDrawingCache();
+        return cache;
     }
 }
 
