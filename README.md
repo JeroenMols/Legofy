@@ -46,6 +46,7 @@ See the application in action:
 [@molsjeroen](https://twitter.com/molsjeroen)
 
 ## Credits
+- Based on Legofy by [Juan Potato](https://github.com/JuanPotato/Legofy)
 - [Mona Lisa](http://www.wikiart.org/en/leonardo-da-vinci/mona-lisa?utm_source=returned&utm_medium=referral&utm_campaign=referral) - Leonard Da Vinchi
 - [Son of a man](http://www.wikiart.org/en/rene-magritte/son-of-man-1964) - Rene Magritte
 - [Android Developers logo](http://android-developers.blogspot.nl/) - Google
