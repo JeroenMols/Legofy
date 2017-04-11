@@ -14,20 +14,33 @@
  *  limitations under the License.
  */
 
-package com.jeroenmols.legofy;
+package com.jeroenmols.brickeffect.effect;
 
 import android.graphics.Bitmap;
 
 /**
- * @author Jeroen Mols on 23/04/16.
+ * @author Jeroen Mols on 17/04/16.
  */
-public class BitmapWrapper {
+public class NoEffect implements Effect {
+    private Bitmap bitmap;
 
-    public Bitmap createBitmap(int width, int height, Bitmap.Config config) {
-        return Bitmap.createBitmap(width, height, config);
+    @Override
+    public void initialize(Bitmap bitmap) {
+        this.bitmap = bitmap;
     }
 
-    public Bitmap createScaledBitmap(Bitmap src, int dstWidth, int dstHeight, boolean filter) {
-        return Bitmap.createScaledBitmap(src, dstWidth, dstHeight, filter);
+    @Override
+    public boolean hasNextFrame() {
+        return false;
+    }
+
+    @Override
+    public int getFrameDuration() {
+        return 100000000;
+    }
+
+    @Override
+    public Bitmap nextFrame() {
+        return bitmap;
     }
 }
